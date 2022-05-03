@@ -24,7 +24,7 @@ class Intro(AdventureScene):
 
         game = AdventureGame()
         intro_text = game.get_current_output()
-        intro_text_element = Paragraph(intro_text, color=BLACK, width=12, font_size=96, line_spacing=2, font=TERMINAL_FONT).move_to(UP * 1)
+        intro_text_element = Text(intro_text, color=BLACK, width=12, font_size=96, line_spacing=2, font=TERMINAL_FONT).move_to(UP * 1)
         self.play(Write(intro_text_element, run_time=3))
         self.pause(3)
 
@@ -37,7 +37,7 @@ class Intro(AdventureScene):
         self.play(MoveToTarget(input_element, run_time=2), FadeOut(intro_text_element))
 
         second_room_text = game.get_current_output()
-        second_room_text_element = Paragraph(second_room_text, color=BLACK, width=12, font_size=96, line_spacing=2, font=TERMINAL_FONT).move_to(DOWN * 0.5)
+        second_room_text_element = Text(second_room_text, color=BLACK, width=12, font_size=96, line_spacing=2, font=TERMINAL_FONT).move_to(DOWN * 0.5)
         self.play(Write(second_room_text_element, run_time=2))
         self.pause(1)
         self.play(FadeOut(second_room_text_element, run_time=1), FadeOut(input_element, run_time=1))
