@@ -23,7 +23,7 @@ class Intro(AdventureScene):
         self.play(FadeOut(text_element, run_time=3), GrowFromCenter(title_element, run_time=3, lag_ratio=0.03))
         subtitle_element = Text("Galactic Puzzle Hunt 2018", color=BLACK, font_size=60, font=MAIN_FONT).move_to(DOWN * 1.2)
         self.play(FadeIn(subtitle_element, run_time=2))
-        self.pause(5)
+        self.pause(2)
         self.play(FadeOut(title_element, run_time=1), FadeOut(subtitle_element, run_time=1))
 
 
