@@ -285,7 +285,7 @@ class AdventureGame:
         self.state.execute(line)
 
         if self.state.won:
-            self.state.print("Congratulations, you played yourself. The answer to this puzzle is PASIPHAE.")
+            self.state.print("Congratulations, you played yourself.")
         elif self.state.location != self.old_location:
             self.state.describe_room()
 
