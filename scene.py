@@ -1,3 +1,9 @@
+'''
+To render all scenes:
+
+manim -pql scene.py -q h AllScenes
+'''
+
 from manim import *
 from keyboard import draw_keyboard_create, draw_qwerty_keyboard, draw_dungeon_keyboard
 from adventure import AdventureGame
@@ -22,6 +28,9 @@ class Intro(AdventureScene):
         self.pause(2)
         self.play(FadeOut(title_element, run_time=1), FadeOut(subtitle_element, run_time=1))
 
+
+class GameIntro(AdventureScene):
+    def draw_scene(self):
         game = AdventureGame()
         intro_text = game.get_current_output()
         intro_text_element = MarkupText(intro_text, color=BLACK, width=12, font_size=48, line_spacing=2, font=TERMINAL_FONT).move_to(UP * 1)
@@ -43,13 +52,10 @@ class Intro(AdventureScene):
         self.play(FadeOut(second_room_text_element, run_time=1), FadeOut(input_element, run_time=1))
         self.pause(1)
 
-class CreateQwertyKeyboard(AdventureScene):
-    def draw_scene(self):
-        outlines, texts = draw_qwerty_keyboard()
-        draw_keyboard_create(self, outlines, texts)
 
+class AllScenes(AdventureScene):
+    ALL_SCENES = [Intro, GameIntro]
 
-class CreateDungeonKeyboard(AdventureScene):
     def draw_scene(self):
-        outlines, texts = draw_dungeon_keyboard()
-        draw_keyboard_create(self, outlines, texts)
+        for scene in self.ALL_SCENES:
+            scene.draw_scene(self)
