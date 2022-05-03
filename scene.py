@@ -5,7 +5,6 @@ manim -pql scene.py -q h AllScenes
 '''
 
 from manim import *
-from keyboard import draw_keyboard_create, draw_qwerty_keyboard, draw_dungeon_keyboard
 from adventure import AdventureGame
 
 
