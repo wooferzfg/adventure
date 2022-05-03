@@ -1,7 +1,7 @@
 '''
 To render all scenes:
 
-manim -pql scene.py -q h AllScenes
+manim -p scene.py -q h AllScenes
 '''
 
 from manim import *
@@ -52,8 +52,34 @@ class GameIntro(AdventureScene):
         self.pause(1)
 
 
+class DungeonRoom(AdventureScene):
+    def draw_scene(self):
+        letter_element = Text("G", color=RED, font_size=200, weight=BOLD, font=MAIN_FONT).move_to(DOWN * 2.25)
+        self.play(FadeIn(letter_element, run_time=1))
+        self.pause(0.5)
+
+        button = ImageMobject('images/button_not_pressed.png').move_to(UP * 1.75 + RIGHT * 2.5)
+        self.play(FadeIn(button, run_time=1))
+        self.pause(0.5)
+
+        blackboard = ImageMobject('images/blackboard.png').move_to(UP * 1.75 + LEFT * 2.5)
+        self.play(FadeIn(blackboard, run_time=1))
+        self.pause(0.5)
+
+        monkey = ImageMobject('images/monkey.png').move_to(RIGHT * 5).align_on_border(UP, buff=0)
+        self.play(FadeIn(monkey, run_time=1))
+        self.pause(3)
+
+        self.play(
+            FadeOut(letter_element, run_time=1),
+            FadeOut(button, run_time=1),
+            FadeOut(blackboard, run_time=1),
+            FadeOut(monkey, run_time=1),
+        )
+
+
 class AllScenes(AdventureScene):
-    ALL_SCENES = [Intro, GameIntro]
+    ALL_SCENES = [Intro, GameIntro, DungeonRoom]
 
     def draw_scene(self):
         for scene in self.ALL_SCENES:
