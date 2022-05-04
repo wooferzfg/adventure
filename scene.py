@@ -6,6 +6,11 @@ manim -p scene.py -q h AllScenes
 
 from manim import *
 from adventure import AdventureGame
+from keyboard import (
+    DUNGEON_LETTERS, coordinate_for_index, draw_key_outline, draw_dungeon_keyboard,
+    draw_keyboard_create, draw_qwerty_keyboard, index_for_qwerty_letter
+)
+import string
 
 
 MAIN_FONT = 'Century Gothic'
@@ -78,8 +83,63 @@ class DungeonRoom(AdventureScene):
         )
 
 
+class TypeSameThing(AdventureScene):
+    def draw_scene(self):
+        dungeon_outlines, dungeon_texts = draw_dungeon_keyboard(0, 0)
+        draw_keyboard_create(self, dungeon_outlines, dungeon_texts, run_time=4)
+        self.pause(2)
+
+        keyboard_move_anims = []
+        for element in (dungeon_outlines + dungeon_texts):
+            element.generate_target()
+            element.target.shift(UP * 1.25)
+            keyboard_move_anims.append(MoveToTarget(element, run_time=1.5))
+        self.play(*keyboard_move_anims)
+
+        qwerty_outlines, qwerty_texts = draw_qwerty_keyboard(0, 2.25)
+        draw_keyboard_create(self, qwerty_outlines, qwerty_texts, run_time=4)
+        self.pause(3)
+
+        previous_keys = []
+        top_letters = []
+
+        for index, letter in enumerate(string.ascii_uppercase):
+            row_index, column_index = index_for_qwerty_letter(letter)
+            top_position_x, top_position_y = coordinate_for_index(row_index, column_index, 0, -1.25)
+            bottom_position_x, bottom_position_y = coordinate_for_index(row_index, column_index, 0, 2.25)
+
+            top_key = draw_key_outline(top_position_x, top_position_y, color=YELLOW, fill_opacity=0, stroke_width=6)
+            bottom_key = draw_key_outline(bottom_position_x, bottom_position_y, color=YELLOW, fill_opacity=0, stroke_width=6)
+
+            dungeon_letter = DUNGEON_LETTERS[row_index][column_index]
+            current_text = Text(dungeon_letter, color=BLACK, font_size=36, font=MAIN_FONT) \
+                .move_to(UP * 3.5 + RIGHT * (index * 0.5 - 6.3))
+            top_letters.append(current_text)
+
+            time_per_letter = 0.3
+
+            self.play(
+                FadeIn(top_key, run_time=time_per_letter),
+                FadeIn(bottom_key, run_time=time_per_letter),
+                *map(lambda key: FadeOut(key, run_time=time_per_letter), previous_keys),
+                Write(current_text, run_time=time_per_letter)
+            )
+
+            previous_keys = [top_key, bottom_key]
+
+        self.play(*map(lambda key: FadeOut(key, run_time=time_per_letter), previous_keys))
+        self.pause(1)
+        self.play(
+            *map(
+                lambda element: FadeOut(element, run_time=1),
+                dungeon_outlines + dungeon_texts + qwerty_outlines + qwerty_texts + top_letters,
+            ),
+        )
+        self.pause(1)
+
+
 class AllScenes(AdventureScene):
-    ALL_SCENES = [Intro, GameIntro, DungeonRoom]
+    ALL_SCENES = [Intro, GameIntro, DungeonRoom, TypeSameThing]
 
     def draw_scene(self):
         for scene in self.ALL_SCENES:
