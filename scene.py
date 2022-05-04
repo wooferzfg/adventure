@@ -1,9 +1,3 @@
-"""
-To render all scenes:
-
-manim -p scene.py -q h AllScenes
-"""
-
 import string
 
 from manim import *
