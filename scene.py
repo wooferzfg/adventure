@@ -4,13 +4,14 @@ To render all scenes:
 manim -p scene.py -q h AllScenes
 '''
 
-from manim import *
 from adventure import AdventureGame
 from keyboard import (
     DUNGEON_LETTERS, coordinate_for_index, draw_key_outline, draw_dungeon_keyboard,
     draw_keyboard_create, draw_qwerty_keyboard, index_for_qwerty_letter
 )
+from manim import *
 import string
+from text_animations import animate_text_update
 
 
 MAIN_FONT = 'Century Gothic'
@@ -101,10 +102,12 @@ class TypeSameThing(AdventureScene):
         draw_keyboard_create(self, qwerty_outlines, qwerty_texts, run_time=4)
         self.pause(3)
 
+        total_dungeon_letters = ''
+        previous_top_text = None
         previous_keys = []
-        top_letters = []
+        time_per_letter = 0.3
 
-        for index, letter in enumerate(string.ascii_uppercase):
+        for letter in string.ascii_uppercase:
             row_index, column_index = index_for_qwerty_letter(letter)
             top_position_x, top_position_y = coordinate_for_index(row_index, column_index, 0, -1.25)
             bottom_position_x, bottom_position_y = coordinate_for_index(row_index, column_index, 0, 2.25)
@@ -112,20 +115,20 @@ class TypeSameThing(AdventureScene):
             top_key = draw_key_outline(top_position_x, top_position_y, color=YELLOW, fill_opacity=0, stroke_width=6)
             bottom_key = draw_key_outline(bottom_position_x, bottom_position_y, color=YELLOW, fill_opacity=0, stroke_width=6)
 
-            dungeon_letter = DUNGEON_LETTERS[row_index][column_index]
-            current_text = Text(dungeon_letter, color=BLACK, font_size=36, font=MAIN_FONT) \
-                .move_to(UP * 3.5 + RIGHT * (index * 0.5 - 6.25))
-            top_letters.append(current_text)
-
-            time_per_letter = 0.3
+            total_dungeon_letters += DUNGEON_LETTERS[row_index][column_index]
+            current_top_text = Text(total_dungeon_letters, color=BLACK, font_size=48, font=MAIN_FONT) \
+                .move_to(UP * 3.5) \
+                .align_on_border(LEFT, buff=1.7)
+            top_text_animations = animate_text_update(current_top_text, previous_top_text, run_time=time_per_letter)
 
             self.play(
                 FadeIn(top_key, run_time=time_per_letter),
                 FadeIn(bottom_key, run_time=time_per_letter),
                 *map(lambda key: FadeOut(key, run_time=time_per_letter), previous_keys),
-                Write(current_text, run_time=time_per_letter)
+                *top_text_animations
             )
 
+            previous_top_text = current_top_text
             previous_keys = [top_key, bottom_key]
 
         self.play(*map(lambda key: FadeOut(key, run_time=time_per_letter), previous_keys))
@@ -133,7 +136,7 @@ class TypeSameThing(AdventureScene):
         self.play(
             *map(
                 lambda element: FadeOut(element, run_time=1),
-                dungeon_outlines + dungeon_texts + qwerty_outlines + qwerty_texts + top_letters,
+                dungeon_outlines + dungeon_texts + qwerty_outlines + qwerty_texts + [previous_top_text],
             ),
         )
         self.pause(1)
