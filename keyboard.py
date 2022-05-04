@@ -1,23 +1,22 @@
 from manim import *
 
-
-KEY_FONT = 'Century Gothic'
-KEY_FILL = '#f0f0f0'
+KEY_FONT = "Century Gothic"
+KEY_FILL = "#f0f0f0"
 
 
 QWERTY_LETTERS = [
-    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-    ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+    ["Z", "X", "C", "V", "B", "N", "M"],
 ]
-QWERTY_COLOR = '#2929ff'
+QWERTY_COLOR = "#2929ff"
 
 DUNGEON_LETTERS = [
-    ['H', 'A', 'S', 'K', 'Y', 'D', 'B', 'T', 'O', 'T'],
-    ['T', 'E', 'E', 'A', 'M', 'E', 'H', 'I', 'N'],
-    ['S', 'R', 'P', 'O', 'Y', 'B', 'G']
+    ["H", "A", "S", "K", "Y", "D", "B", "T", "O", "T"],
+    ["T", "E", "E", "A", "M", "E", "H", "I", "N"],
+    ["S", "R", "P", "O", "Y", "B", "G"],
 ]
-DUNGEON_COLOR = '#ff2929'
+DUNGEON_COLOR = "#ff2929"
 
 
 def index_for_qwerty_letter(letter):
@@ -28,14 +27,19 @@ def index_for_qwerty_letter(letter):
 
 
 def draw_key_outline(position_x, position_y, color=BLACK, fill_opacity=1, stroke_width=4):
-    return RoundedRectangle(width=0.85, height=0.85, corner_radius=0.1, color=color, stroke_width=stroke_width) \
-        .set_fill(KEY_FILL, opacity=fill_opacity) \
+    return (
+        RoundedRectangle(
+            width=0.85, height=0.85, corner_radius=0.1, color=color, stroke_width=stroke_width
+        )
+        .set_fill(KEY_FILL, opacity=fill_opacity)
         .move_to(RIGHT * position_x + DOWN * position_y)
+    )
 
 
 def draw_key_text(position_x, position_y, letter, color):
-    return Text(text=letter, color=color, font=KEY_FONT, weight=BOLD) \
-        .move_to(RIGHT * position_x + DOWN * position_y)
+    return Text(text=letter, color=color, font=KEY_FONT, weight=BOLD).move_to(
+        RIGHT * position_x + DOWN * position_y
+    )
 
 
 def draw_key(position_x, position_y, letter, color):

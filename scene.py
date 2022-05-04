@@ -1,21 +1,27 @@
-'''
+"""
 To render all scenes:
 
 manim -p scene.py -q h AllScenes
-'''
+"""
+
+import string
+
+from manim import *
 
 from adventure import AdventureGame
 from keyboard import (
-    DUNGEON_LETTERS, coordinate_for_index, draw_key_outline, draw_dungeon_keyboard,
-    draw_keyboard_create, draw_qwerty_keyboard, index_for_qwerty_letter
+    DUNGEON_LETTERS,
+    coordinate_for_index,
+    draw_dungeon_keyboard,
+    draw_key_outline,
+    draw_keyboard_create,
+    draw_qwerty_keyboard,
+    index_for_qwerty_letter,
 )
-from manim import *
-import string
 from text_animations import animate_text_update
 
-
-MAIN_FONT = 'Century Gothic'
-TERMINAL_FONT = 'Consolas'
+MAIN_FONT = "Century Gothic"
+TERMINAL_FONT = "Consolas"
 
 
 class AdventureScene(Scene):
@@ -26,9 +32,13 @@ class AdventureScene(Scene):
 
 class Intro(AdventureScene):
     def draw_scene(self):
-        title_element = Text("Adventure", color=BLACK, font_size=160, font=MAIN_FONT).move_to(UP * 0.8)
+        title_element = Text("Adventure", color=BLACK, font_size=160, font=MAIN_FONT).move_to(
+            UP * 0.8
+        )
         self.play(Write(title_element, run_time=8))
-        subtitle_element = Text("Galactic Puzzle Hunt 2018", color=BLACK, font_size=60, font=MAIN_FONT).move_to(DOWN * 1.2)
+        subtitle_element = Text(
+            "Galactic Puzzle Hunt 2018", color=BLACK, font_size=60, font=MAIN_FONT
+        ).move_to(DOWN * 1.2)
         self.play(FadeIn(subtitle_element, run_time=2))
         self.pause(2)
         self.play(FadeOut(title_element, run_time=1), FadeOut(subtitle_element, run_time=1))
@@ -38,11 +48,17 @@ class GameIntro(AdventureScene):
     def draw_scene(self):
         game = AdventureGame()
         intro_text = game.get_current_output()
-        intro_text_element = MarkupText(intro_text, color=BLACK, width=12, font_size=48, line_spacing=2, font=TERMINAL_FONT).move_to(UP * 1)
+        intro_text_element = MarkupText(
+            intro_text, color=BLACK, width=12, font_size=48, line_spacing=2, font=TERMINAL_FONT
+        ).move_to(UP * 1)
         self.play(Write(intro_text_element, run_time=3))
         self.pause(3)
 
-        input_element = Text("> ne", color=BLACK, font_size = 36, font=TERMINAL_FONT).move_to(DOWN * 2.5).align_to(intro_text_element, LEFT)
+        input_element = (
+            Text("> ne", color=BLACK, font_size=36, font=TERMINAL_FONT)
+            .move_to(DOWN * 2.5)
+            .align_to(intro_text_element, LEFT)
+        )
         self.play(FadeIn(input_element, run_time=1, lag_ratio=0.4))
         game.run_command("ne")
 
@@ -51,7 +67,14 @@ class GameIntro(AdventureScene):
         self.play(MoveToTarget(input_element, run_time=2), FadeOut(intro_text_element))
 
         second_room_text = game.get_current_output()
-        second_room_text_element = MarkupText(second_room_text, color=BLACK, width=12, font_size=48, line_spacing=2, font=TERMINAL_FONT).move_to(DOWN * 0.5)
+        second_room_text_element = MarkupText(
+            second_room_text,
+            color=BLACK,
+            width=12,
+            font_size=48,
+            line_spacing=2,
+            font=TERMINAL_FONT,
+        ).move_to(DOWN * 0.5)
         self.play(Write(second_room_text_element, run_time=2))
         self.pause(1)
         self.play(FadeOut(second_room_text_element, run_time=1), FadeOut(input_element, run_time=1))
@@ -60,19 +83,21 @@ class GameIntro(AdventureScene):
 
 class DungeonRoom(AdventureScene):
     def draw_scene(self):
-        letter_element = Text("G", color=RED, font_size=200, weight=BOLD, font=MAIN_FONT).move_to(DOWN * 2.25)
+        letter_element = Text("G", color=RED, font_size=200, weight=BOLD, font=MAIN_FONT).move_to(
+            DOWN * 2.25
+        )
         self.play(FadeIn(letter_element, run_time=1))
         self.pause(0.5)
 
-        button = ImageMobject('images/button_not_pressed.png').move_to(UP * 1.75 + RIGHT * 2.5)
+        button = ImageMobject("images/button_not_pressed.png").move_to(UP * 1.75 + RIGHT * 2.5)
         self.play(FadeIn(button, run_time=1))
         self.pause(0.5)
 
-        blackboard = ImageMobject('images/blackboard.png').move_to(UP * 1.75 + LEFT * 2.5)
+        blackboard = ImageMobject("images/blackboard.png").move_to(UP * 1.75 + LEFT * 2.5)
         self.play(FadeIn(blackboard, run_time=1))
         self.pause(0.5)
 
-        monkey = ImageMobject('images/monkey.png').move_to(RIGHT * 5).align_on_border(UP, buff=0)
+        monkey = ImageMobject("images/monkey.png").move_to(RIGHT * 5).align_on_border(UP, buff=0)
         self.play(FadeIn(monkey, run_time=1))
         self.pause(3)
 
@@ -92,7 +117,7 @@ class TypeSameThing(AdventureScene):
         self.pause(2)
 
         keyboard_move_anims = []
-        for element in (dungeon_outlines + dungeon_texts):
+        for element in dungeon_outlines + dungeon_texts:
             element.generate_target()
             element.target.shift(UP * 1.25)
             keyboard_move_anims.append(MoveToTarget(element, run_time=1.5))
@@ -102,7 +127,7 @@ class TypeSameThing(AdventureScene):
         draw_keyboard_create(self, qwerty_outlines, qwerty_texts, run_time=4)
         self.pause(3)
 
-        total_dungeon_letters = ''
+        total_dungeon_letters = ""
         previous_top_text = None
         previous_keys = []
         time_per_letter = 0.3
@@ -110,22 +135,32 @@ class TypeSameThing(AdventureScene):
         for letter in string.ascii_uppercase:
             row_index, column_index = index_for_qwerty_letter(letter)
             top_position_x, top_position_y = coordinate_for_index(row_index, column_index, 0, -1.25)
-            bottom_position_x, bottom_position_y = coordinate_for_index(row_index, column_index, 0, 2.25)
+            bottom_position_x, bottom_position_y = coordinate_for_index(
+                row_index, column_index, 0, 2.25
+            )
 
-            top_key = draw_key_outline(top_position_x, top_position_y, color=YELLOW, fill_opacity=0, stroke_width=6)
-            bottom_key = draw_key_outline(bottom_position_x, bottom_position_y, color=YELLOW, fill_opacity=0, stroke_width=6)
+            top_key = draw_key_outline(
+                top_position_x, top_position_y, color=YELLOW, fill_opacity=0, stroke_width=6
+            )
+            bottom_key = draw_key_outline(
+                bottom_position_x, bottom_position_y, color=YELLOW, fill_opacity=0, stroke_width=6
+            )
 
             total_dungeon_letters += DUNGEON_LETTERS[row_index][column_index]
-            current_top_text = Text(total_dungeon_letters, color=BLACK, font_size=48, font=MAIN_FONT) \
-                .move_to(UP * 3.5) \
+            current_top_text = (
+                Text(total_dungeon_letters, color=BLACK, font_size=48, font=MAIN_FONT)
+                .move_to(UP * 3.5)
                 .align_on_border(LEFT, buff=1.7)
-            top_text_animations = animate_text_update(current_top_text, previous_top_text, run_time=time_per_letter)
+            )
+            top_text_animations = animate_text_update(
+                current_top_text, previous_top_text, run_time=time_per_letter
+            )
 
             self.play(
                 FadeIn(top_key, run_time=time_per_letter),
                 FadeIn(bottom_key, run_time=time_per_letter),
                 *map(lambda key: FadeOut(key, run_time=time_per_letter), previous_keys),
-                *top_text_animations
+                *top_text_animations,
             )
 
             previous_top_text = current_top_text
@@ -136,7 +171,11 @@ class TypeSameThing(AdventureScene):
         self.play(
             *map(
                 lambda element: FadeOut(element, run_time=1),
-                dungeon_outlines + dungeon_texts + qwerty_outlines + qwerty_texts + [previous_top_text],
+                dungeon_outlines
+                + dungeon_texts
+                + qwerty_outlines
+                + qwerty_texts
+                + [previous_top_text],
             ),
         )
         self.pause(1)
