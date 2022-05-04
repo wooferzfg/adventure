@@ -5,12 +5,12 @@ from manim import *
 from adventure import AdventureGame
 from keyboard import (
     DUNGEON_LETTERS,
+    INDEX_FOR_QWERTY_LETTER,
     coordinate_for_index,
     draw_dungeon_keyboard,
     draw_key_outline,
     draw_keyboard_create,
     draw_qwerty_keyboard,
-    index_for_qwerty_letter,
 )
 from text_animations import animate_text_update
 
@@ -127,7 +127,7 @@ class TypeSameThing(AdventureScene):
         time_per_letter = 0.3
 
         for letter in string.ascii_uppercase:
-            row_index, column_index = index_for_qwerty_letter(letter)
+            row_index, column_index = INDEX_FOR_QWERTY_LETTER[letter]
             top_position_x, top_position_y = coordinate_for_index(row_index, column_index, 0, -1.25)
             bottom_position_x, bottom_position_y = coordinate_for_index(
                 row_index, column_index, 0, 2.25
@@ -153,23 +153,25 @@ class TypeSameThing(AdventureScene):
             self.play(
                 FadeIn(top_key, run_time=time_per_letter),
                 FadeIn(bottom_key, run_time=time_per_letter),
-                *map(lambda key: FadeOut(key, run_time=time_per_letter), previous_keys),
+                *(FadeOut(key, run_time=time_per_letter) for key in previous_keys),
                 *top_text_animations,
             )
 
             previous_top_text = current_top_text
             previous_keys = [top_key, bottom_key]
 
-        self.play(*map(lambda key: FadeOut(key, run_time=time_per_letter), previous_keys))
+        self.play(*(FadeOut(key, run_time=time_per_letter) for key in previous_keys))
         self.pause(1)
         self.play(
-            *map(
-                lambda element: FadeOut(element, run_time=1),
-                dungeon_outlines
-                + dungeon_texts
-                + qwerty_outlines
-                + qwerty_texts
-                + [previous_top_text],
+            *(
+                FadeOut(element, run_time=1)
+                for element in (
+                    dungeon_outlines
+                    + dungeon_texts
+                    + qwerty_outlines
+                    + qwerty_texts
+                    + [previous_top_text]
+                )
             ),
         )
         self.pause(1)
