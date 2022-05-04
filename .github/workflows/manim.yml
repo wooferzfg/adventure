@@ -1,0 +1,25 @@
+name: Render video
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@v3
+
+      - name: Render video
+        run: |
+          docker run --user="$(id -u):$(id -g)" --rm -t -v "/home/runner/work/adventure/adventure:/manim" manimcommunity/manim manim -qm scene.py AllScenes
+
+      - name: Upload video
+        uses: actions/upload-artifact@v3
+        with:
+          name: video
+          path: media/videos/scene/720p30/AllScenes.mp4
