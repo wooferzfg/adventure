@@ -1,6 +1,6 @@
 # Adventure
 
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/wooferzfg/adventure/main.svg)](https://results.pre-commit.ci/latest/github/wooferzfg/adventure/main)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/wooferzfg/adventure/main.svg)](https://results.pre-commit.ci/latest/github/wooferzfg/adventure/main) [![Build Status](https://github.com/wooferzfg/adventure/workflows/Render%20video/badge.svg)](https://github.com/wooferzfg/adventure/actions)
 
 1. [Install poetry](https://python-poetry.org/docs/)
 2. [Install dependencies for Manim](https://docs.manim.community/en/stable/installation.html)
