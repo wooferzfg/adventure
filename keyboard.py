@@ -18,12 +18,11 @@ DUNGEON_LETTERS = [
 ]
 DUNGEON_COLOR = "#ff2929"
 
+INDEX_FOR_QWERTY_LETTER = {}
 
-def index_for_qwerty_letter(letter):
-    for x, row in enumerate(QWERTY_LETTERS):
-        for y, value in enumerate(row):
-            if value == letter:
-                return (x, y)
+for x, row in enumerate(QWERTY_LETTERS):
+    for y, letter in enumerate(row):
+        INDEX_FOR_QWERTY_LETTER[letter] = (x, y)
 
 
 def draw_key_outline(position_x, position_y, color=BLACK, fill_opacity=1, stroke_width=4):
@@ -84,6 +83,8 @@ def draw_dungeon_keyboard(x_offset, y_offset):
 
 
 def draw_keyboard_create(scene, outlines, texts, run_time):
-    outline_creates = map(lambda outline: Write(outline), outlines)
-    text_creates = map(lambda text: FadeIn(text), texts)
-    scene.play(*outline_creates, *text_creates, run_time=run_time)
+    scene.play(
+        *(Write(outline) for outline in outlines),
+        *(FadeIn(text) for text in texts),
+        run_time=run_time
+    )
