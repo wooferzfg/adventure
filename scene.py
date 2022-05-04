@@ -113,7 +113,7 @@ class TypeSameThing(AdventureScene):
 
             dungeon_letter = DUNGEON_LETTERS[row_index][column_index]
             current_text = Text(dungeon_letter, color=BLACK, font_size=36, font=MAIN_FONT) \
-                .move_to(UP * 3.5 + RIGHT * (index * 0.5 - 6.3))
+                .move_to(UP * 3.5 + RIGHT * (index * 0.5 - 6.25))
             top_letters.append(current_text)
 
             time_per_letter = 0.3
