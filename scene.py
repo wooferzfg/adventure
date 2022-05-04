@@ -81,6 +81,7 @@ class DungeonRoom(AdventureScene):
             FadeOut(blackboard, run_time=1),
             FadeOut(monkey, run_time=1),
         )
+        self.pause(1)
 
 
 class TypeSameThing(AdventureScene):
