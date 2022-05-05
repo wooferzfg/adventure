@@ -254,8 +254,102 @@ class GameKeyboardType(AdventureScene):
         self.pause(1)
 
 
+class GoalOfPuzzle(AdventureScene):
+    def draw_scene(self):
+        real_keyboard_header = (
+            Text("Letters Typed on Real Keyboard:", color=BLACK, font_size=32, font=MAIN_FONT)
+            .move_to(UP * 2)
+            .align_on_border(LEFT, buff=3.4)
+        )
+        game_keyboard_header = (
+            Text("Letters Typed on Game Keyboard:", color=BLACK, font_size=32, font=MAIN_FONT)
+            .move_to(DOWN * 1)
+            .align_on_border(LEFT, buff=3.4)
+        )
+
+        self.play(Write(real_keyboard_header, run_time=1), Write(game_keyboard_header, run_time=1))
+
+        previous_real_text = None
+        previous_game_text = None
+        real_letters = ""
+        game_letters = ""
+
+        time_per_letter = 0.2
+        events = [
+            ("real", "E"),
+            ("real", "W"),
+            ("real", "S"),
+            ("game", "E"),
+            ("real", "W"),
+            ("game", "W"),
+            ("real", "P"),
+            ("real", "N"),
+            ("game", "S"),
+            ("real", "E"),
+            ("game", "W"),
+            ("game", "P"),
+            ("real", "E"),
+            ("game", "N"),
+            ("real", "N"),
+            ("real", "W"),
+            ("game", "E"),
+            ("game", "E"),
+            ("real", "A"),
+            ("game", "N"),
+            ("real", "P"),
+            ("game", "W"),
+            ("real", "R"),
+            ("game", "A"),
+            ("real", "E"),
+            ("game", "P"),
+            ("game", "R"),
+            ("real", "R"),
+            ("game", "E"),
+            ("game", "R"),
+        ]
+
+        for keyboard_type, letter in events:
+            if keyboard_type == "real":
+                real_letters += letter
+                new_real_text = (
+                    Text(real_letters, color=BLACK, font_size=60, font=TERMINAL_FONT)
+                    .move_to(UP * 1.05)
+                    .align_on_border(LEFT, buff=3.4)
+                )
+                self.play(
+                    *animate_text_add_letters(
+                        new_real_text, previous_real_text, run_time=time_per_letter
+                    )
+                )
+                previous_real_text = new_real_text
+            elif keyboard_type == "game":
+                game_letters += letter
+                new_game_text = (
+                    Text(
+                        game_letters, color=QWERTY_COLOR, font_size=50, font=MAIN_FONT, weight=BOLD
+                    )
+                    .move_to(DOWN * 1.95)
+                    .align_on_border(LEFT, buff=3.4)
+                )
+                self.play(
+                    *animate_text_add_letters(
+                        new_game_text, previous_game_text, run_time=time_per_letter
+                    )
+                )
+                previous_game_text = new_game_text
+
+        self.pause(0.5)
+        self.play(
+            FadeOut(real_keyboard_header, run_time=1),
+            FadeOut(game_keyboard_header, run_time=1),
+            FadeOut(previous_real_text, run_time=1),
+            FadeOut(previous_game_text, run_time=1),
+        )
+        self.pause(1)
+
+
 class AllScenes(AdventureScene):
-    ALL_SCENES = [Intro, GameIntro, DungeonRoom, TypeSameThing, GameKeyboardType]
+    ALL_SCENES = [Intro, GameIntro, DungeonRoom, TypeSameThing, GameKeyboardType, GoalOfPuzzle]
 
     def draw_scene(self):
         for scene in self.ALL_SCENES:
