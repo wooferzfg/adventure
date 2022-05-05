@@ -6,13 +6,15 @@ from adventure import AdventureGame
 from keyboard import (
     DUNGEON_LETTERS,
     INDEX_FOR_QWERTY_LETTER,
+    animate_keyboard_outlines,
+    animate_keyboard_texts,
     coordinate_for_index,
     draw_dungeon_keyboard,
     draw_key_outline,
     draw_keyboard_create,
     draw_qwerty_keyboard,
 )
-from text_animations import animate_text_update
+from text_animations import animate_text_add_letters, animate_text_remove_letters
 
 MAIN_FONT = "Century Gothic"
 TERMINAL_FONT = "Consolas"
@@ -146,7 +148,7 @@ class TypeSameThing(AdventureScene):
                 .move_to(UP * 3.5)
                 .align_on_border(LEFT, buff=1.7)
             )
-            top_text_animations = animate_text_update(
+            top_text_animations = animate_text_add_letters(
                 current_top_text, previous_top_text, run_time=time_per_letter
             )
 
@@ -162,15 +164,61 @@ class TypeSameThing(AdventureScene):
 
         self.play(*(FadeOut(key, run_time=time_per_letter) for key in previous_keys))
         self.pause(1)
+
+        both_keyboards_text = (
+            Text("BOTHKEYBOARDS", color=BLACK, font_size=48, font=MAIN_FONT)
+            .move_to(UP * 3.5)
+            .align_on_border(RIGHT, buff=1.7)
+        )
+        both_keyboards_animations = animate_text_remove_letters(
+            both_keyboards_text, previous_top_text, run_time=2
+        )
+
+        self.play(
+            *(
+                FadeOut(element, run_time=2)
+                for element in (dungeon_outlines + dungeon_texts + qwerty_outlines + qwerty_texts)
+            ),
+            *both_keyboards_animations,
+        )
+
+        both_keyboards_text.generate_target()
+        both_keyboards_text.target.move_to(UP * 3.5)
+        self.play(MoveToTarget(both_keyboards_text, run_time=2))
+
+        real_keyboard_example = Text(
+            "> ne w w e se sw nw p e ne nw sw", color=BLACK, font_size=36, font=TERMINAL_FONT
+        ).move_to(UP * 1.25)
+        self.play(FadeIn(real_keyboard_example, run_time=5, lag_ratio=0.4))
+
+        real_keyboard_text = Text(
+            "Real Keyboard:", color=BLACK, font_size=48, font=MAIN_FONT
+        ).move_to(UP * 2)
+        self.play(Write(real_keyboard_text, run_time=1))
+        self.pause(2)
+
+        self.play(*animate_keyboard_outlines(qwerty_outlines, run_time=3))
+
+        game_keyboard_text = Text(
+            "Game Keyboard:", color=BLACK, font_size=48, font=MAIN_FONT
+        ).move_to(DOWN * 0.25)
+        self.play(Write(game_keyboard_text, run_time=1))
+
+        self.play(*animate_keyboard_texts(qwerty_texts, run_time=6))
+        self.pause(2)
+
         self.play(
             *(
                 FadeOut(element, run_time=1)
                 for element in (
-                    dungeon_outlines
-                    + dungeon_texts
-                    + qwerty_outlines
+                    qwerty_outlines
                     + qwerty_texts
-                    + [previous_top_text]
+                    + [
+                        both_keyboards_text,
+                        game_keyboard_text,
+                        real_keyboard_example,
+                        real_keyboard_text,
+                    ]
                 )
             ),
         )

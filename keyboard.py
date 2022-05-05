@@ -82,9 +82,16 @@ def draw_dungeon_keyboard(x_offset, y_offset):
     return draw_keyboard(DUNGEON_LETTERS, DUNGEON_COLOR, x_offset, y_offset)
 
 
+def animate_keyboard_outlines(outlines, run_time):
+    return (Write(outline, run_time=run_time) for outline in outlines)
+
+
+def animate_keyboard_texts(texts, run_time):
+    return (FadeIn(text, run_time=run_time) for text in texts)
+
+
 def draw_keyboard_create(scene, outlines, texts, run_time):
     scene.play(
-        *(Write(outline) for outline in outlines),
-        *(FadeIn(text) for text in texts),
-        run_time=run_time
+        *animate_keyboard_outlines(outlines, run_time),
+        *animate_keyboard_texts(texts, run_time),
     )

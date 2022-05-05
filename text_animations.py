@@ -5,7 +5,11 @@ def delayed_until_end(_):
     return 0
 
 
-def animate_text_update(new_text, previous_text, run_time):
+def instant_start(_):
+    return 1
+
+
+def animate_text_add_letters(new_text, previous_text, run_time):
     animations = [FadeIn(new_text, run_time=run_time)]
 
     if previous_text is None:
@@ -18,3 +22,9 @@ def animate_text_update(new_text, previous_text, run_time):
             rate_func=delayed_until_end,
         )
     ]
+
+
+def animate_text_remove_letters(new_text, previous_text, run_time):
+    animations = [FadeIn(new_text, run_time=run_time, rate_func=instant_start)]
+
+    return animations + [FadeOut(previous_text, run_time=run_time)]
