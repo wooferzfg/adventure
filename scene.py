@@ -4,8 +4,10 @@ from manim import *
 
 from adventure import AdventureGame
 from keyboard import (
+    DUNGEON_COLOR,
     DUNGEON_LETTERS,
     INDEX_FOR_QWERTY_LETTER,
+    QWERTY_COLOR,
     animate_keyboard_outlines,
     animate_keyboard_texts,
     coordinate_for_index,
@@ -79,9 +81,9 @@ class GameIntro(AdventureScene):
 
 class DungeonRoom(AdventureScene):
     def draw_scene(self):
-        letter_element = Text("G", color=RED, font_size=200, weight=BOLD, font=MAIN_FONT).move_to(
-            DOWN * 2.25
-        )
+        letter_element = Text(
+            "G", color=DUNGEON_COLOR, font_size=200, weight=BOLD, font=MAIN_FONT
+        ).move_to(DOWN * 2.25)
         self.play(FadeIn(letter_element, run_time=1))
         self.pause(0.5)
 
@@ -225,8 +227,35 @@ class TypeSameThing(AdventureScene):
         self.pause(1)
 
 
+class GameKeyboardType(AdventureScene):
+    def draw_scene(self):
+        letter_element = Text(
+            "W", color=QWERTY_COLOR, font_size=200, weight=BOLD, font=MAIN_FONT
+        ).move_to(DOWN * 1.75)
+        button_not_pressed = ImageMobject("images/button_not_pressed.png", z_index=1).move_to(
+            UP * 1
+        )
+        self.play(FadeIn(letter_element, run_time=2), FadeIn(button_not_pressed, run_time=2))
+
+        button_pressed = ImageMobject("images/button_pressed.png").move_to(UP * 1)
+        self.add(button_pressed)
+
+        self.pause(4)
+        p_command = Text("> p", color=BLACK, font_size=36, font=TERMINAL_FONT).move_to(UP * 2.25)
+        self.play(FadeIn(p_command, run_time=0.5, lag_ratio=0.4))
+
+        self.play(FadeOut(button_not_pressed, run_time=1))
+        self.pause(0.5)
+        self.play(
+            FadeOut(p_command, run_time=1),
+            FadeOut(button_pressed, run_time=1),
+            FadeOut(letter_element, run_time=1),
+        )
+        self.pause(1)
+
+
 class AllScenes(AdventureScene):
-    ALL_SCENES = [Intro, GameIntro, DungeonRoom, TypeSameThing]
+    ALL_SCENES = [Intro, GameIntro, DungeonRoom, TypeSameThing, GameKeyboardType]
 
     def draw_scene(self):
         for scene in self.ALL_SCENES:
