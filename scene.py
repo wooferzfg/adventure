@@ -230,7 +230,7 @@ class TypeSameThing(AdventureScene):
 class GameKeyboardType(AdventureScene):
     def draw_scene(self):
         letter_element = Text(
-            "W", color=QWERTY_COLOR, font_size=200, weight=BOLD, font=MAIN_FONT
+            "S", color=QWERTY_COLOR, font_size=200, weight=BOLD, font=MAIN_FONT
         ).move_to(DOWN * 1.75)
         button_not_pressed = ImageMobject("images/button_not_pressed.png", z_index=1).move_to(
             UP * 1
