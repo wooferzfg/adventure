@@ -168,7 +168,7 @@ class TypeSameThing(AdventureScene):
         both_keyboards_text = (
             Text("BOTHKEYBOARDS", color=BLACK, font_size=48, font=MAIN_FONT)
             .move_to(UP * 3.5)
-            .align_on_border(RIGHT, buff=1.7)
+            .align_on_border(RIGHT, buff=1.694)
         )
         both_keyboards_animations = animate_text_remove_letters(
             both_keyboards_text, previous_top_text, run_time=2
