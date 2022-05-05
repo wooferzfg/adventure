@@ -276,34 +276,34 @@ class GoalOfPuzzle(AdventureScene):
 
         time_per_letter = 0.2
         events = [
-            ("real", "E"),
-            ("real", "W"),
-            ("real", "S"),
+            ("real", "e"),
+            ("real", "w"),
+            ("real", "s"),
             ("game", "E"),
-            ("real", "W"),
+            ("real", "w"),
             ("game", "W"),
-            ("real", "P"),
-            ("real", "N"),
+            ("real", "p"),
+            ("real", "n"),
             ("game", "S"),
-            ("real", "E"),
+            ("real", "e"),
             ("game", "W"),
             ("game", "P"),
-            ("real", "E"),
+            ("real", "e"),
             ("game", "N"),
-            ("real", "N"),
-            ("real", "W"),
+            ("real", "n"),
+            ("real", "w"),
             ("game", "E"),
             ("game", "E"),
-            ("real", "A"),
+            ("real", "a"),
             ("game", "N"),
-            ("real", "P"),
+            ("real", "p"),
             ("game", "W"),
-            ("real", "R"),
+            ("real", "r"),
             ("game", "A"),
-            ("real", "E"),
+            ("real", "e"),
             ("game", "P"),
             ("game", "R"),
-            ("real", "R"),
+            ("real", "r"),
             ("game", "E"),
             ("game", "R"),
         ]
@@ -313,7 +313,8 @@ class GoalOfPuzzle(AdventureScene):
                 real_letters += letter
                 new_real_text = (
                     Text(real_letters, color=BLACK, font_size=60, font=TERMINAL_FONT)
-                    .move_to(UP * 1.05)
+                    .align_to(real_keyboard_header, UP)
+                    .shift(DOWN * 1)
                     .align_on_border(LEFT, buff=3.4)
                 )
                 self.play(
