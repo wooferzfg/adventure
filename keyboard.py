@@ -30,43 +30,36 @@ for x, row in enumerate(QWERTY_LETTERS):
         INDEX_FOR_QWERTY_LETTER[letter] = (x, y)
 
 
-def vector_for_position(position_x, position_y):
-    return RIGHT * position_x + DOWN * position_y
-
-
-def draw_key_outline(position_x, position_y, color=BLACK, fill_opacity=1, stroke_width=4):
+def draw_key_outline(position, color=BLACK, fill_opacity=1, stroke_width=4):
     return (
         RoundedRectangle(
             width=0.85, height=0.85, corner_radius=0.1, color=color, stroke_width=stroke_width
         )
         .set_fill(KEY_FILL, opacity=fill_opacity)
-        .move_to(vector_for_position(position_x, position_y))
+        .move_to(position)
     )
 
 
-def draw_key_text(position_x, position_y, letter, color):
-    return Text(text=letter, color=color, font=KEY_FONT, weight=BOLD, z_index=1).move_to(
-        vector_for_position(position_x, position_y)
-    )
+def draw_key_text(position, letter, color):
+    return Text(text=letter, color=color, font=KEY_FONT, weight=BOLD, z_index=1).move_to(position)
 
 
-def draw_key(position_x, position_y, letter, color):
+def draw_key(position, letter, color):
     return (
-        draw_key_outline(position_x, position_y),
-        draw_key_text(position_x, position_y, letter, color),
+        draw_key_outline(position),
+        draw_key_text(position, letter, color),
     )
 
 
-def coordinate_for_index(row, column, x_offset, y_offset):
-    return (
-        -4.5 + row * 0.5 + column + x_offset,
-        -1 + row + y_offset,
-    )
+def position_for_index(row, column, x_offset, y_offset):
+    position_x = -4.5 + row * 0.5 + column + x_offset
+    position_y = -1 + row + y_offset
+    return RIGHT * position_x + DOWN * position_y
 
 
-def coordinate_for_letter(letter, x_offset, y_offset):
+def position_for_letter(letter, x_offset, y_offset):
     row, column = INDEX_FOR_QWERTY_LETTER[letter]
-    return coordinate_for_index(row, column, x_offset, y_offset)
+    return position_for_index(row, column, x_offset, y_offset)
 
 
 def draw_keyboard(letters, letter_color, x_offset, y_offset):
@@ -77,10 +70,10 @@ def draw_keyboard(letters, letter_color, x_offset, y_offset):
         row = letters[i]
 
         for j in range(len(row)):
-            position_x, position_y = coordinate_for_index(i, j, x_offset, y_offset)
+            position = position_for_index(i, j, x_offset, y_offset)
             letter = row[j]
 
-            outline, text = draw_key(position_x, position_y, letter, letter_color)
+            outline, text = draw_key(position, letter, letter_color)
 
             outlines.append(outline)
             texts.append(text)
@@ -111,18 +104,16 @@ def animate_keyboard_create(outlines, texts, run_time):
 
 
 def draw_position_circle(letter, x_offset, y_offset):
-    position_x, position_y = coordinate_for_letter(letter, x_offset, y_offset)
+    position = position_for_letter(letter, x_offset, y_offset)
 
-    return Circle(radius=0.365, color=POSITION_CIRCLE_COLOR, stroke_width=6).move_to(
-        vector_for_position(position_x, position_y)
-    )
+    return Circle(radius=0.365, color=POSITION_CIRCLE_COLOR, stroke_width=6).move_to(position)
 
 
 def animate_position_circle_move(position_circle, letter, x_offset, y_offset, run_time):
-    position_x, position_y = coordinate_for_letter(letter, x_offset, y_offset)
+    position = position_for_letter(letter, x_offset, y_offset)
 
     position_circle.generate_target()
-    position_circle.target.move_to(vector_for_position(position_x, position_y))
+    position_circle.target.move_to(position)
 
     return MoveToTarget(position_circle, run_time=run_time)
 
@@ -145,7 +136,7 @@ def draw_letters_typed_headers():
 def draw_real_letters_text(letters):
     return (
         Text(letters, color=BLACK, font_size=40, font=TERMINAL_FONT)
-        .align_on_border(UP, buff=1.25)
+        .align_on_border(UP, buff=1.05)
         .align_on_border(LEFT, buff=0.5)
     )
 
@@ -153,7 +144,7 @@ def draw_real_letters_text(letters):
 def draw_game_letters_text(letters):
     return (
         Text(letters, color=QWERTY_COLOR, font_size=33, font=MAIN_FONT, weight=BOLD)
-        .move_to(UP * 2)
+        .move_to(UP * 1.3)
         .align_on_border(LEFT, buff=0.5)
     )
 
@@ -193,6 +184,10 @@ def process_events(keyboard_status, events):
     - letters
     - run_time
 
+    type: game_text
+    - letters
+    - run_time
+
     type: button_press
     - letter
     - run_time
@@ -211,8 +206,9 @@ def process_events(keyboard_status, events):
 
     x_offset = 0
     y_offset = 2.25
+    animation_layers = 5
 
-    animations = []
+    animations = {i: [] for i in range(animation_layers)}
 
     for event in events:
         event_type = event["type"]
@@ -220,15 +216,15 @@ def process_events(keyboard_status, events):
 
         if event_type == "create_keyboard":
             outlines, texts = draw_qwerty_keyboard(x_offset, y_offset)
-            animations.extend(animate_keyboard_create(outlines, texts, run_time=run_time))
+            animations[0].extend(animate_keyboard_create(outlines, texts, run_time=run_time))
         elif event_type == "create_position_circle":
             letter = event["letter"]
 
             position_circle = draw_position_circle(letter, x_offset, y_offset)
-            animations.append(FadeIn(position_circle, run_time=1))
+            animations[0].append(FadeIn(position_circle, run_time=1))
         elif event_type == "create_letters_typed_headers":
             real_keyboard_header, game_keyboard_header = draw_letters_typed_headers()
-            animations.extend(
+            animations[0].extend(
                 [
                     Write(real_keyboard_header, run_time=1),
                     Write(game_keyboard_header, run_time=1),
@@ -237,7 +233,7 @@ def process_events(keyboard_status, events):
         elif event_type == "move":
             letter = event["letter"]
 
-            animations.append(
+            animations[0].append(
                 animate_position_circle_move(
                     position_circle, letter, x_offset, y_offset, run_time=run_time
                 )
@@ -246,10 +242,18 @@ def process_events(keyboard_status, events):
             real_letters += event["letters"]
 
             real_text = draw_real_letters_text(real_letters)
-            animations.extend(
+            animations[0].extend(
                 animate_text_add_letters(real_text, previous_real_text, run_time=run_time)
             )
             previous_real_text = real_text
+        elif event_type == "game_text":
+            game_letters += event["letters"]
+
+            game_text = draw_game_letters_text(game_letters)
+            animations[0].extend(
+                animate_text_add_letters(game_text, previous_game_text, run_time=run_time)
+            )
+            previous_game_text = game_text
 
     keyboard_status["previous_real_text"] = previous_real_text
     keyboard_status["previous_game_text"] = previous_game_text
@@ -261,6 +265,9 @@ def process_events(keyboard_status, events):
     keyboard_status["game_keyboard_header"] = game_keyboard_header
     keyboard_status["position_circle"] = position_circle
 
-    scene.play(*animations)
+    for i in range(animation_layers):
+        animations_in_layer = animations[i]
+        if animations_in_layer:
+            scene.play(*animations_in_layer)
 
     return keyboard_status

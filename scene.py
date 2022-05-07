@@ -12,16 +12,11 @@ from keyboard import (
     animate_keyboard_create,
     animate_keyboard_outlines,
     animate_keyboard_texts,
-    animate_position_circle_move,
-    coordinate_for_index,
     draw_dungeon_keyboard,
-    draw_game_letters_text,
     draw_key_outline,
-    draw_letters_typed_headers,
-    draw_position_circle,
     draw_qwerty_keyboard,
-    draw_real_letters_text,
     init_keyboard_status,
+    position_for_index,
     process_events,
 )
 from text_animations import animate_text_add_letters, animate_text_remove_letters
@@ -137,16 +132,12 @@ class TypeSameThing(AdventureScene):
 
         for letter in string.ascii_uppercase:
             row_index, column_index = INDEX_FOR_QWERTY_LETTER[letter]
-            top_position_x, top_position_y = coordinate_for_index(row_index, column_index, 0, -1.25)
-            bottom_position_x, bottom_position_y = coordinate_for_index(
-                row_index, column_index, 0, 2.25
-            )
+            top_position = position_for_index(row_index, column_index, 0, -1.25)
+            bottom_position = position_for_index(row_index, column_index, 0, 2.25)
 
-            top_key = draw_key_outline(
-                top_position_x, top_position_y, color=YELLOW, fill_opacity=0, stroke_width=6
-            )
+            top_key = draw_key_outline(top_position, color=YELLOW, fill_opacity=0, stroke_width=6)
             bottom_key = draw_key_outline(
-                bottom_position_x, bottom_position_y, color=YELLOW, fill_opacity=0, stroke_width=6
+                bottom_position, color=YELLOW, fill_opacity=0, stroke_width=6
             )
 
             total_dungeon_letters += DUNGEON_LETTERS[row_index][column_index]
@@ -365,7 +356,11 @@ class NavigatingPressingButtons(AdventureScene):
                 {
                     "type": "create_keyboard",
                     "run_time": 2,
-                }
+                },
+                {
+                    "type": "create_letters_typed_headers",
+                    "run_time": 1,
+                },
             ],
         )
 
@@ -375,16 +370,6 @@ class NavigatingPressingButtons(AdventureScene):
                 {
                     "type": "create_position_circle",
                     "letter": "H",
-                    "run_time": 1,
-                }
-            ],
-        )
-
-        keyboard_status = process_events(
-            keyboard_status,
-            [
-                {
-                    "type": "create_letters_typed_headers",
                     "run_time": 1,
                 }
             ],
@@ -449,6 +434,27 @@ class NavigatingPressingButtons(AdventureScene):
                 {
                     "type": "real_text",
                     "letters": "e",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "button_press",
+                    "letter": "N",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "p",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "game_text",
+                    "letters": "N",
                     "run_time": time_per_letter,
                 },
             ],
