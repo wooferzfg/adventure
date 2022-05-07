@@ -3,6 +3,7 @@ import string
 from manim import *
 
 from adventure import AdventureGame
+from fonts import MAIN_FONT, TERMINAL_FONT
 from keyboard import (
     DUNGEON_COLOR,
     DUNGEON_LETTERS,
@@ -11,16 +12,19 @@ from keyboard import (
     animate_keyboard_create,
     animate_keyboard_outlines,
     animate_keyboard_texts,
-    animate_position_circle_create,
+    animate_position_circle_move,
     coordinate_for_index,
     draw_dungeon_keyboard,
+    draw_game_letters_text,
     draw_key_outline,
+    draw_letters_typed_headers,
+    draw_position_circle,
     draw_qwerty_keyboard,
+    draw_real_letters_text,
+    init_keyboard_status,
+    process_events,
 )
 from text_animations import animate_text_add_letters, animate_text_remove_letters
-
-MAIN_FONT = "Century Gothic"
-TERMINAL_FONT = "Consolas"
 
 
 class AdventureScene(Scene):
@@ -355,7 +359,32 @@ class NavigatingPressingButtons(AdventureScene):
         outlines, texts = draw_qwerty_keyboard(0, 2.25)
         self.play(*animate_keyboard_create(outlines, texts, run_time=2))
 
-        self.play(animate_position_circle_create("H", 0, 2.25, 1))
+        position_circle = draw_position_circle("H", 0, 2.25)
+        self.play(FadeIn(position_circle, run_time=1))
+
+        real_keyboard_header, game_keyboard_header = draw_letters_typed_headers()
+        self.play(Write(real_keyboard_header, run_time=1), Write(game_keyboard_header, run_time=1))
+
+        keyboard_status = init_keyboard_status(position_circle, 0, 2.25)
+
+        animations, keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "Y",
+                    "run_time": 1,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "nw",
+                    "run_time": 1,
+                },
+            ],
+        )
+        self.play(*animations)
+
+        self.pause(1)
 
 
 class AllScenes(AdventureScene):
