@@ -95,8 +95,11 @@ class DungeonRoom(AdventureScene):
         self.play(FadeIn(blackboard, run_time=1))
         self.pause(0.5)
 
-        monkey = ImageMobject("images/monkey.png").move_to(RIGHT * 5).align_on_border(UP, buff=0)
-        self.play(FadeIn(monkey, run_time=1))
+        monkey = ImageMobject("images/monkey.png").move_to(RIGHT * 5 + UP * 4.85)
+        monkey.generate_target()
+        monkey.target.align_on_border(UP, buff=0)
+        self.add(monkey)
+        self.play(MoveToTarget(monkey, run_time=1))
         self.pause(3)
 
         self.play(
