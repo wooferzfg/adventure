@@ -356,33 +356,103 @@ class GoalOfPuzzle(AdventureScene):
 
 class NavigatingPressingButtons(AdventureScene):
     def draw_scene(self):
-        outlines, texts = draw_qwerty_keyboard(0, 2.25)
-        self.play(*animate_keyboard_create(outlines, texts, run_time=2))
+        keyboard_status = init_keyboard_status(self)
+        time_per_letter = 1
 
-        position_circle = draw_position_circle("H", 0, 2.25)
-        self.play(FadeIn(position_circle, run_time=1))
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_keyboard",
+                    "run_time": 2,
+                }
+            ],
+        )
 
-        real_keyboard_header, game_keyboard_header = draw_letters_typed_headers()
-        self.play(Write(real_keyboard_header, run_time=1), Write(game_keyboard_header, run_time=1))
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_position_circle",
+                    "letter": "H",
+                    "run_time": 1,
+                }
+            ],
+        )
 
-        keyboard_status = init_keyboard_status(position_circle, 0, 2.25)
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_letters_typed_headers",
+                    "run_time": 1,
+                }
+            ],
+        )
 
-        animations, keyboard_status = process_events(
+        keyboard_status = process_events(
             keyboard_status,
             [
                 {
                     "type": "move",
                     "letter": "Y",
-                    "run_time": 1,
+                    "run_time": time_per_letter,
                 },
                 {
                     "type": "real_text",
                     "letters": "nw",
-                    "run_time": 1,
+                    "run_time": time_per_letter,
                 },
             ],
         )
-        self.play(*animations)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "G",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "sw",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "B",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "se",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "N",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "e",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
 
         self.pause(1)
 

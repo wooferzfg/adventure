@@ -158,20 +158,33 @@ def draw_game_letters_text(letters):
     )
 
 
-def init_keyboard_status(position_circle, x_offset, y_offset):
+def init_keyboard_status(scene):
     return {
+        "scene": scene,
         "previous_real_text": None,
         "previous_game_text": None,
         "real_letters": "",
         "game_letters": "",
-        "position_circle": position_circle,
-        "x_offset": x_offset,
-        "y_offset": y_offset,
+        "outlines": None,
+        "texts": None,
+        "real_keyboard_header": None,
+        "game_keyboard_header": None,
+        "position_circle": None,
     }
 
 
 def process_events(keyboard_status, events):
     """
+    type: create_keyboard
+    - run_time
+
+    type: create_position_circle
+    - letter
+    - run_time
+
+    type: create_letters_typed_headers
+    - run_time
+
     type: move
     - letter
     - run_time
@@ -179,14 +192,25 @@ def process_events(keyboard_status, events):
     type: real_text
     - letters
     - run_time
+
+    type: button_press
+    - letter
+    - run_time
     """
+
+    scene = keyboard_status["scene"]
     previous_real_text = keyboard_status["previous_real_text"]
     previous_game_text = keyboard_status["previous_game_text"]
     real_letters = keyboard_status["real_letters"]
     game_letters = keyboard_status["game_letters"]
+    outlines = keyboard_status["outlines"]
+    texts = keyboard_status["texts"]
+    real_keyboard_header = keyboard_status["real_keyboard_header"]
+    game_keyboard_header = keyboard_status["game_keyboard_header"]
     position_circle = keyboard_status["position_circle"]
-    x_offset = keyboard_status["x_offset"]
-    y_offset = keyboard_status["y_offset"]
+
+    x_offset = 0
+    y_offset = 2.25
 
     animations = []
 
@@ -194,7 +218,23 @@ def process_events(keyboard_status, events):
         event_type = event["type"]
         run_time = event["run_time"]
 
-        if event_type == "move":
+        if event_type == "create_keyboard":
+            outlines, texts = draw_qwerty_keyboard(x_offset, y_offset)
+            animations.extend(animate_keyboard_create(outlines, texts, run_time=run_time))
+        elif event_type == "create_position_circle":
+            letter = event["letter"]
+
+            position_circle = draw_position_circle(letter, x_offset, y_offset)
+            animations.append(FadeIn(position_circle, run_time=1))
+        elif event_type == "create_letters_typed_headers":
+            real_keyboard_header, game_keyboard_header = draw_letters_typed_headers()
+            animations.extend(
+                [
+                    Write(real_keyboard_header, run_time=1),
+                    Write(game_keyboard_header, run_time=1),
+                ]
+            )
+        elif event_type == "move":
             letter = event["letter"]
 
             animations.append(
@@ -215,5 +255,12 @@ def process_events(keyboard_status, events):
     keyboard_status["previous_game_text"] = previous_game_text
     keyboard_status["real_letters"] = real_letters
     keyboard_status["game_letters"] = game_letters
+    keyboard_status["outlines"] = outlines
+    keyboard_status["texts"] = texts
+    keyboard_status["real_keyboard_header"] = real_keyboard_header
+    keyboard_status["game_keyboard_header"] = game_keyboard_header
+    keyboard_status["position_circle"] = position_circle
 
-    return animations, keyboard_status
+    scene.play(*animations)
+
+    return keyboard_status
