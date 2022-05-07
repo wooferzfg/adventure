@@ -97,11 +97,11 @@ class DungeonRoom(AdventureScene):
 
         monkey = ImageMobject("images/monkey.png").move_to(RIGHT * 5 + UP * 4.85)
         monkey.generate_target()
-        monkey.target.align_on_border(UP, buff=-0.05)
+        monkey.target.align_on_border(UP, buff=-0.07)
         self.add(monkey)
         self.play(MoveToTarget(monkey, run_time=1))
 
-        pivot = 4 * UP + RIGHT * 5.3
+        pivot = 4 * UP + RIGHT * 5.4
         self.play(
             Rotate(
                 monkey,
