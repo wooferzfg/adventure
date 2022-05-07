@@ -39,7 +39,7 @@ class Intro(AdventureScene):
         ).move_to(DOWN * 1.2)
         self.play(FadeIn(subtitle_element, run_time=2))
         self.pause(2)
-        self.play(FadeOut(title_element, run_time=1), FadeOut(subtitle_element, run_time=1))
+        self.play(FadeOut(title_element, subtitle_element, run_time=1))
 
 
 class GameIntro(AdventureScene):
@@ -75,7 +75,7 @@ class GameIntro(AdventureScene):
         ).move_to(DOWN * 0.5)
         self.play(Write(second_room_text_element, run_time=2))
         self.pause(1)
-        self.play(FadeOut(second_room_text_element, run_time=1), FadeOut(input_element, run_time=1))
+        self.play(FadeOut(second_room_text_element, input_element, run_time=1))
         self.pause(1)
 
 
@@ -100,10 +100,7 @@ class DungeonRoom(AdventureScene):
         self.pause(3)
 
         self.play(
-            FadeOut(letter_element, run_time=1),
-            FadeOut(button, run_time=1),
-            FadeOut(blackboard, run_time=1),
-            FadeOut(monkey, run_time=1),
+            FadeOut(letter_element, button, blackboard, monkey, run_time=1),
         )
         self.pause(1)
 
@@ -151,8 +148,7 @@ class TypeSameThing(AdventureScene):
             )
 
             self.play(
-                FadeIn(top_key, run_time=time_per_letter),
-                FadeIn(bottom_key, run_time=time_per_letter),
+                FadeIn(top_key, bottom_key, run_time=time_per_letter),
                 *(FadeOut(key, run_time=time_per_letter) for key in previous_keys),
                 *top_text_animations,
             )
@@ -160,7 +156,7 @@ class TypeSameThing(AdventureScene):
             previous_top_text = current_top_text
             previous_keys = [top_key, bottom_key]
 
-        self.play(*(FadeOut(key, run_time=time_per_letter) for key in previous_keys))
+        self.play(FadeOut(*previous_keys, run_time=time_per_letter))
         self.pause(1)
 
         both_keyboards_text = (
@@ -173,9 +169,8 @@ class TypeSameThing(AdventureScene):
         )
 
         self.play(
-            *(
-                FadeOut(element, run_time=2)
-                for element in (dungeon_outlines + dungeon_texts + qwerty_outlines + qwerty_texts)
+            FadeOut(
+                *(dungeon_outlines + dungeon_texts + qwerty_outlines + qwerty_texts), run_time=2
             ),
             *both_keyboards_animations,
         )
@@ -206,9 +201,8 @@ class TypeSameThing(AdventureScene):
         self.pause(2)
 
         self.play(
-            *(
-                FadeOut(element, run_time=1)
-                for element in (
+            FadeOut(
+                *(
                     qwerty_outlines
                     + qwerty_texts
                     + [
@@ -217,8 +211,9 @@ class TypeSameThing(AdventureScene):
                         real_keyboard_example,
                         real_keyboard_text,
                     ]
-                )
-            ),
+                ),
+                run_time=1,
+            )
         )
         self.pause(1)
 
@@ -231,7 +226,7 @@ class GameKeyboardType(AdventureScene):
         button_not_pressed = ImageMobject("images/button_not_pressed.png", z_index=1).move_to(
             UP * 1
         )
-        self.play(FadeIn(letter_element, run_time=2), FadeIn(button_not_pressed, run_time=2))
+        self.play(FadeIn(letter_element, button_not_pressed, run_time=2))
 
         button_pressed = ImageMobject("images/button_pressed.png").move_to(UP * 1)
         self.add(button_pressed)
@@ -243,9 +238,7 @@ class GameKeyboardType(AdventureScene):
         self.play(FadeOut(button_not_pressed, run_time=1))
         self.pause(0.5)
         self.play(
-            FadeOut(p_command, run_time=1),
-            FadeOut(button_pressed, run_time=1),
-            FadeOut(letter_element, run_time=1),
+            FadeOut(p_command, button_pressed, letter_element, run_time=1),
         )
         self.pause(1)
 
@@ -337,10 +330,13 @@ class GoalOfPuzzle(AdventureScene):
 
         self.pause(0.5)
         self.play(
-            FadeOut(real_keyboard_header, run_time=1),
-            FadeOut(game_keyboard_header, run_time=1),
-            FadeOut(previous_real_text, run_time=1),
-            FadeOut(previous_game_text, run_time=1),
+            FadeOut(
+                real_keyboard_header,
+                game_keyboard_header,
+                previous_real_text,
+                previous_game_text,
+                run_time=1,
+            ),
         )
         self.pause(1)
 
@@ -348,7 +344,7 @@ class GoalOfPuzzle(AdventureScene):
 class NavigatingPressingButtons(AdventureScene):
     def draw_scene(self):
         keyboard_status = init_keyboard_status(self)
-        time_per_letter = 1
+        time_per_letter = 0.7
 
         keyboard_status = process_events(
             keyboard_status,
@@ -359,7 +355,7 @@ class NavigatingPressingButtons(AdventureScene):
                 },
                 {
                     "type": "create_letters_typed_headers",
-                    "run_time": 1,
+                    "run_time": 2,
                 },
             ],
         )
@@ -445,17 +441,168 @@ class NavigatingPressingButtons(AdventureScene):
                 {
                     "type": "button_press",
                     "letter": "N",
-                    "run_time": time_per_letter,
+                    "run_time": time_per_letter * 3,
                 },
                 {
                     "type": "real_text",
                     "letters": "p",
                     "run_time": time_per_letter,
                 },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
                 {
-                    "type": "game_text",
-                    "letters": "N",
+                    "type": "move",
+                    "letter": "B",
                     "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "w",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "V",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "w",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "C",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "w",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "X",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "w",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "S",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "nw",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "W",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "nw",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "button_press",
+                    "letter": "W",
+                    "run_time": time_per_letter * 3,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "p",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "S",
+                    "run_time": time_per_letter,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "se",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "button_press",
+                    "letter": "S",
+                    "run_time": time_per_letter * 3,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "p",
+                    "run_time": time_per_letter,
+                },
+            ],
+        )
+
+        self.pause(1)
+
+        process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "fade_out",
+                    "run_time": 1,
                 },
             ],
         )

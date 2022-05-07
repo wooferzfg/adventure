@@ -21,7 +21,7 @@ DUNGEON_LETTERS = [
 ]
 DUNGEON_COLOR = "#ff2929"
 
-POSITION_CIRCLE_COLOR = "#ffa200"
+POSITION_CIRCLE_COLOR = "#ff8b26"
 
 INDEX_FOR_QWERTY_LETTER = {}
 
@@ -149,6 +149,20 @@ def draw_game_letters_text(letters):
     )
 
 
+def draw_button_and_tooltip(letter, x_offset, y_offset):
+    position = position_for_letter(letter, x_offset, y_offset)
+
+    button_not_pressed = ImageMobject("images/button_not_pressed.png", z_index=4).move_to(
+        position + UP * 1.16
+    )
+    button_pressed = ImageMobject("images/button_pressed.png", z_index=3).move_to(
+        position + UP * 1.16
+    )
+    tooltip = ImageMobject("images/button_tooltip.png", z_index=2).move_to(position + UP * 1.08)
+
+    return (button_not_pressed, button_pressed, tooltip)
+
+
 def init_keyboard_status(scene):
     return {
         "scene": scene,
@@ -184,12 +198,11 @@ def process_events(keyboard_status, events):
     - letters
     - run_time
 
-    type: game_text
-    - letters
-    - run_time
-
     type: button_press
     - letter
+    - run_time
+
+    type: fade_out
     - run_time
     """
 
@@ -206,7 +219,7 @@ def process_events(keyboard_status, events):
 
     x_offset = 0
     y_offset = 2.25
-    animation_layers = 5
+    animation_layers = 3
 
     animations = {i: [] for i in range(animation_layers)}
 
@@ -221,13 +234,13 @@ def process_events(keyboard_status, events):
             letter = event["letter"]
 
             position_circle = draw_position_circle(letter, x_offset, y_offset)
-            animations[0].append(FadeIn(position_circle, run_time=1))
+            animations[0].append(FadeIn(position_circle, run_time=run_time))
         elif event_type == "create_letters_typed_headers":
             real_keyboard_header, game_keyboard_header = draw_letters_typed_headers()
             animations[0].extend(
                 [
-                    Write(real_keyboard_header, run_time=1),
-                    Write(game_keyboard_header, run_time=1),
+                    Write(real_keyboard_header, run_time=run_time),
+                    Write(game_keyboard_header, run_time=run_time),
                 ]
             )
         elif event_type == "move":
@@ -246,14 +259,41 @@ def process_events(keyboard_status, events):
                 animate_text_add_letters(real_text, previous_real_text, run_time=run_time)
             )
             previous_real_text = real_text
-        elif event_type == "game_text":
-            game_letters += event["letters"]
+        elif event_type == "button_press":
+            letter = event["letter"]
 
+            game_letters += letter
             game_text = draw_game_letters_text(game_letters)
-            animations[0].extend(
-                animate_text_add_letters(game_text, previous_game_text, run_time=run_time)
+
+            button_not_pressed, button_pressed, tooltip = draw_button_and_tooltip(
+                letter, x_offset, y_offset
+            )
+            run_time_per_step = run_time / 5
+
+            animations[0].append(
+                FadeIn(button_not_pressed, button_pressed, tooltip, run_time=run_time_per_step)
+            )
+
+            animations[1].append(FadeOut(button_not_pressed, run_time=run_time_per_step))
+            animations[1].extend(
+                animate_text_add_letters(game_text, previous_game_text, run_time=run_time_per_step)
             )
             previous_game_text = game_text
+
+            animations[2].append(FadeOut(button_pressed, tooltip, run_time=run_time_per_step))
+        elif event_type == "fade_out":
+            animations[0].append(
+                FadeOut(
+                    previous_real_text,
+                    previous_game_text,
+                    *outlines,
+                    *texts,
+                    real_keyboard_header,
+                    game_keyboard_header,
+                    position_circle,
+                    run_time=run_time,
+                )
+            )
 
     keyboard_status["previous_real_text"] = previous_real_text
     keyboard_status["previous_game_text"] = previous_game_text
