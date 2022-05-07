@@ -8,12 +8,13 @@ from keyboard import (
     DUNGEON_LETTERS,
     INDEX_FOR_QWERTY_LETTER,
     QWERTY_COLOR,
+    animate_keyboard_create,
     animate_keyboard_outlines,
     animate_keyboard_texts,
+    animate_position_circle_create,
     coordinate_for_index,
     draw_dungeon_keyboard,
     draw_key_outline,
-    draw_keyboard_create,
     draw_qwerty_keyboard,
 )
 from text_animations import animate_text_add_letters, animate_text_remove_letters
@@ -111,7 +112,7 @@ class DungeonRoom(AdventureScene):
 class TypeSameThing(AdventureScene):
     def draw_scene(self):
         dungeon_outlines, dungeon_texts = draw_dungeon_keyboard(0, 0)
-        draw_keyboard_create(self, dungeon_outlines, dungeon_texts, run_time=4)
+        self.play(*animate_keyboard_create(dungeon_outlines, dungeon_texts, run_time=4))
         self.pause(2)
 
         keyboard_move_anims = []
@@ -122,7 +123,7 @@ class TypeSameThing(AdventureScene):
         self.play(*keyboard_move_anims)
 
         qwerty_outlines, qwerty_texts = draw_qwerty_keyboard(0, 2.25)
-        draw_keyboard_create(self, qwerty_outlines, qwerty_texts, run_time=4)
+        self.play(*animate_keyboard_create(qwerty_outlines, qwerty_texts, run_time=4))
         self.pause(3)
 
         total_dungeon_letters = ""
@@ -349,8 +350,24 @@ class GoalOfPuzzle(AdventureScene):
         self.pause(1)
 
 
+class NavigatingPressingButtons(AdventureScene):
+    def draw_scene(self):
+        outlines, texts = draw_qwerty_keyboard(0, 2.25)
+        self.play(*animate_keyboard_create(outlines, texts, run_time=2))
+
+        self.play(animate_position_circle_create("H", 0, 2.25, 1))
+
+
 class AllScenes(AdventureScene):
-    ALL_SCENES = [Intro, GameIntro, DungeonRoom, TypeSameThing, GameKeyboardType, GoalOfPuzzle]
+    ALL_SCENES = [
+        Intro,
+        GameIntro,
+        DungeonRoom,
+        TypeSameThing,
+        GameKeyboardType,
+        GoalOfPuzzle,
+        NavigatingPressingButtons,
+    ]
 
     def draw_scene(self):
         for scene in self.ALL_SCENES:

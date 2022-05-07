@@ -1,3 +1,5 @@
+from itertools import chain
+
 from manim import *
 
 KEY_FONT = "Century Gothic"
@@ -18,6 +20,8 @@ DUNGEON_LETTERS = [
 ]
 DUNGEON_COLOR = "#ff2929"
 
+POSITION_CIRCLE_COLOR = "#fcdb03"
+
 INDEX_FOR_QWERTY_LETTER = {}
 
 for x, row in enumerate(QWERTY_LETTERS):
@@ -36,7 +40,7 @@ def draw_key_outline(position_x, position_y, color=BLACK, fill_opacity=1, stroke
 
 
 def draw_key_text(position_x, position_y, letter, color):
-    return Text(text=letter, color=color, font=KEY_FONT, weight=BOLD).move_to(
+    return Text(text=letter, color=color, font=KEY_FONT, weight=BOLD, z_index=1).move_to(
         RIGHT * position_x + DOWN * position_y
     )
 
@@ -53,6 +57,11 @@ def coordinate_for_index(row, column, x_offset, y_offset):
         -4.5 + row * 0.5 + column + x_offset,
         -1 + row + y_offset,
     )
+
+
+def coordinate_for_letter(letter, x_offset, y_offset):
+    row, column = INDEX_FOR_QWERTY_LETTER[letter]
+    return coordinate_for_index(row, column, x_offset, y_offset)
 
 
 def draw_keyboard(letters, letter_color, x_offset, y_offset):
@@ -90,8 +99,17 @@ def animate_keyboard_texts(texts, run_time):
     return (FadeIn(text, run_time=run_time) for text in texts)
 
 
-def draw_keyboard_create(scene, outlines, texts, run_time):
-    scene.play(
-        *animate_keyboard_outlines(outlines, run_time),
-        *animate_keyboard_texts(texts, run_time),
+def animate_keyboard_create(outlines, texts, run_time):
+    return chain(
+        animate_keyboard_outlines(outlines, run_time), animate_keyboard_texts(texts, run_time)
     )
+
+
+def animate_position_circle_create(letter, x_offset, y_offset, run_time):
+    position_x, position_y = coordinate_for_letter(letter, x_offset, y_offset)
+
+    position_circle = Circle(radius=0.365, color=POSITION_CIRCLE_COLOR, stroke_width=6).move_to(
+        RIGHT * position_x + DOWN * position_y
+    )
+
+    return FadeIn(position_circle, run_time=run_time)
