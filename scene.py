@@ -9,9 +9,11 @@ from keyboard import (
     DUNGEON_LETTERS,
     INDEX_FOR_QWERTY_LETTER,
     QWERTY_COLOR,
+    animate_blackboard_arrow_move,
     animate_keyboard_create,
     animate_keyboard_outlines,
     animate_keyboard_texts,
+    draw_blackboard_arrow,
     draw_dungeon_keyboard,
     draw_key_outline,
     draw_qwerty_keyboard,
@@ -641,6 +643,39 @@ class NavigatingPressingButtons(AdventureScene):
         self.pause(1)
 
 
+class Blackboards(AdventureScene):
+    def draw_scene(self):
+        blackboard = ImageMobject("images/blackboard.png")
+        self.play(FadeIn(blackboard, run_time=2))
+        self.pause(3)
+
+        a_command = Text("> a w nw sw e p", color=BLACK, font_size=36, font=TERMINAL_FONT).move_to(
+            UP * 2.5
+        )
+        self.play(FadeIn(a_command, run_time=1.5, lag_ratio=0.4))
+        self.pause(1)
+
+        blackboard_text = Text("w nw sw e p", color=WHITE, font_size=36, font=TERMINAL_FONT)
+        self.play(Write(blackboard_text, run_time=1.5))
+        self.play(FadeOut(a_command, run_time=1))
+
+        r_command = Text("> r", color=BLACK, font_size=36, font=TERMINAL_FONT).move_to(UP * 2.5)
+        self.play(FadeIn(r_command, run_time=0.5, lag_ratio=0.4))
+        self.pause(3)
+
+        arrow = draw_blackboard_arrow(LEFT * 1.24)
+        self.play(FadeIn(arrow, run_time=1.5))
+
+        self.play(animate_blackboard_arrow_move(arrow, LEFT * 0.6, run_time=1))
+        self.play(animate_blackboard_arrow_move(arrow, RIGHT * 0.15, run_time=1))
+        self.play(animate_blackboard_arrow_move(arrow, RIGHT * 0.77, run_time=1))
+        self.play(animate_blackboard_arrow_move(arrow, RIGHT * 1.25, run_time=1))
+        self.pause(1)
+
+        self.play(FadeOut(blackboard, blackboard_text, r_command, arrow, run_time=1))
+        self.pause(1)
+
+
 class AllScenes(AdventureScene):
     ALL_SCENES = [
         Intro,
@@ -650,6 +685,7 @@ class AllScenes(AdventureScene):
         GameKeyboardType,
         GoalOfPuzzle,
         NavigatingPressingButtons,
+        Blackboards,
     ]
 
     def draw_scene(self):

@@ -5,23 +5,23 @@ from manim import *
 from fonts import KEY_FONT, MAIN_FONT, TERMINAL_FONT
 from text_animations import animate_text_add_letters
 
-KEY_FILL = "#f0f0f0"
-
 QWERTY_LETTERS = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
     ["Z", "X", "C", "V", "B", "N", "M"],
 ]
-QWERTY_COLOR = "#2929ff"
 
 DUNGEON_LETTERS = [
     ["H", "A", "S", "K", "Y", "D", "B", "T", "O", "T"],
     ["T", "E", "E", "A", "M", "E", "H", "I", "N"],
     ["S", "R", "P", "O", "Y", "B", "G"],
 ]
-DUNGEON_COLOR = "#ff2929"
 
+BLACKBOARD_ARROW_COLOR = "#2bffaa"
+DUNGEON_COLOR = "#ff2929"
+KEY_FILL = "#f0f0f0"
 POSITION_CIRCLE_COLOR = "#ff8b26"
+QWERTY_COLOR = "#2929ff"
 
 INDEX_FOR_QWERTY_LETTER = {}
 
@@ -161,6 +161,22 @@ def draw_button_and_tooltip(letter, x_offset, y_offset):
     tooltip = ImageMobject("images/button_tooltip.png", z_index=2).move_to(position + UP * 1.08)
 
     return (button_not_pressed, button_pressed, tooltip)
+
+
+def draw_blackboard_arrow(position):
+    return Arrow(
+        start=position + DOWN * 1,
+        end=position,
+        color=BLACKBOARD_ARROW_COLOR,
+        max_tip_length_to_length_ratio=0.4,
+        max_stroke_width_to_length_ratio=12,
+    )
+
+
+def animate_blackboard_arrow_move(arrow, position, run_time):
+    arrow.generate_target()
+    arrow.target.move_to(position + DOWN * 0.5)
+    return MoveToTarget(arrow, run_time=run_time)
 
 
 def init_keyboard_status(scene):
