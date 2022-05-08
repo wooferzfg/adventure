@@ -95,17 +95,17 @@ class DungeonRoom(AdventureScene):
         self.play(FadeIn(blackboard, run_time=1))
         self.pause(0.5)
 
-        monkey = ImageMobject("images/monkey.png").move_to(RIGHT * 5 + UP * 4.85)
+        monkey = ImageMobject("images/monkey.png").move_to(RIGHT * 5 + UP * 5.2)
         monkey.generate_target()
-        monkey.target.align_on_border(UP, buff=-0.07)
+        monkey.target.align_on_border(UP, buff=-0.1)
         self.add(monkey)
         self.play(MoveToTarget(monkey, run_time=1))
 
-        pivot = 4 * UP + RIGHT * 5.4
+        pivot = 4 * UP + RIGHT * 5.5
         self.play(
             Rotate(
                 monkey,
-                PI / 16,
+                PI / 12,
                 about_point=pivot,
                 run_time=0.75,
                 rate_func=rate_functions.ease_in_out_sine,
@@ -114,7 +114,7 @@ class DungeonRoom(AdventureScene):
         self.play(
             Rotate(
                 monkey,
-                -PI / 8,
+                -PI / 6,
                 about_point=pivot,
                 run_time=1.5,
                 rate_func=rate_functions.ease_in_out_sine,
@@ -123,7 +123,7 @@ class DungeonRoom(AdventureScene):
         self.play(
             Rotate(
                 monkey,
-                PI / 16,
+                PI / 12,
                 about_point=pivot,
                 run_time=0.75,
                 rate_func=rate_functions.ease_in_out_sine,
