@@ -108,7 +108,7 @@ class DungeonRoom(AdventureScene):
                 PI / 16,
                 about_point=pivot,
                 run_time=0.75,
-                rate_func=rate_functions.ease_in_out_quad,
+                rate_func=rate_functions.ease_in_out_sine,
             )
         )
         self.play(
@@ -117,7 +117,7 @@ class DungeonRoom(AdventureScene):
                 -PI / 8,
                 about_point=pivot,
                 run_time=1.5,
-                rate_func=rate_functions.ease_in_out_quad,
+                rate_func=rate_functions.ease_in_out_sine,
             )
         )
         self.play(
@@ -126,7 +126,7 @@ class DungeonRoom(AdventureScene):
                 PI / 16,
                 about_point=pivot,
                 run_time=0.75,
-                rate_func=rate_functions.ease_in_out_quad,
+                rate_func=rate_functions.ease_in_out_sine,
             )
         )
 
