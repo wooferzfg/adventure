@@ -670,9 +670,9 @@ class Blackboards(AdventureScene):
         self.play(animate_blackboard_arrow_move(arrow, RIGHT * 0.15, run_time=1))
         self.play(animate_blackboard_arrow_move(arrow, RIGHT * 0.77, run_time=1))
         self.play(animate_blackboard_arrow_move(arrow, RIGHT * 1.25, run_time=1))
-        self.pause(1)
 
-        self.play(FadeOut(blackboard, blackboard_text, r_command, arrow, run_time=1))
+        self.play(FadeOut(r_command, arrow, run_time=1))
+        self.play(FadeOut(blackboard, blackboard_text, run_time=1))
         self.pause(1)
 
 
