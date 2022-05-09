@@ -165,8 +165,9 @@ def draw_button_and_tooltip(letter, x_offset, y_offset):
 
 def draw_blackboard_arrow(position):
     return Arrow(
-        start=position + DOWN * 1,
-        end=position + UP * 0.1,
+        start=position + DOWN * 0.75,
+        end=position + DOWN * 0.15,
+        buff=0,
         color=BLACKBOARD_ARROW_COLOR,
         max_tip_length_to_length_ratio=0.4,
         max_stroke_width_to_length_ratio=12,
