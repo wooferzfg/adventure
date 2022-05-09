@@ -166,7 +166,7 @@ def draw_button_and_tooltip(letter, x_offset, y_offset):
 def draw_blackboard_arrow(position):
     return Arrow(
         start=position + DOWN * 1,
-        end=position,
+        end=position + UP * 0.1,
         color=BLACKBOARD_ARROW_COLOR,
         max_tip_length_to_length_ratio=0.4,
         max_stroke_width_to_length_ratio=12,
@@ -175,8 +175,26 @@ def draw_blackboard_arrow(position):
 
 def animate_blackboard_arrow_move(arrow, position, run_time):
     arrow.generate_target()
-    arrow.target.move_to(position + DOWN * 0.5)
+    arrow.target.move_to(position + DOWN * 0.45)
     return MoveToTarget(arrow, run_time=run_time)
+
+
+def draw_blackboard_with_letter(position, letter):
+    blackboard = ImageMobject("images/blackboard.png").move_to(position)
+    blackboard_letter = (
+        Text(letter, color=QWERTY_COLOR, font_size=48, font=MAIN_FONT, weight=BOLD)
+        .align_to(blackboard, UP + RIGHT)
+        .shift(LEFT * 6.3)
+    )
+    return blackboard, blackboard_letter
+
+
+def draw_blackboard_text(position, text):
+    width = 5 if ("\n" in text) else None
+
+    return Text(
+        text, color=WHITE, font_size=36, font=TERMINAL_FONT, width=width, line_spacing=2
+    ).move_to(position)
 
 
 def init_keyboard_status(scene):
@@ -191,6 +209,10 @@ def init_keyboard_status(scene):
         "real_keyboard_header": None,
         "game_keyboard_header": None,
         "position_circle": None,
+        "blackboard": None,
+        "blackboard_letter": None,
+        "blackboard_text": None,
+        "blackboard_arrow": None,
     }
 
 
@@ -206,6 +228,10 @@ def process_events(keyboard_status, events):
     type: create_letters_typed_headers
     - run_time
 
+    type: create_blackboard
+    - letter
+    - run_time
+
     type: move
     - letter
     - run_time
@@ -218,7 +244,21 @@ def process_events(keyboard_status, events):
     - letter
     - run_time
 
+    type: blackboard_text
+    - text
+    - run_time
+
+    type: blackboard_arrow
+    - position
+    - run_time
+
     type: fade_out
+    - run_time
+
+    type: fade_out_blackboard
+    - run_time
+
+    type: fade_out_blackboard_arrow
     - run_time
     """
 
@@ -232,9 +272,14 @@ def process_events(keyboard_status, events):
     real_keyboard_header = keyboard_status["real_keyboard_header"]
     game_keyboard_header = keyboard_status["game_keyboard_header"]
     position_circle = keyboard_status["position_circle"]
+    blackboard = keyboard_status["blackboard"]
+    blackboard_letter = keyboard_status["blackboard_letter"]
+    blackboard_text = keyboard_status["blackboard_text"]
+    blackboard_arrow = keyboard_status["blackboard_arrow"]
 
     x_offset = 0
     y_offset = 2.25
+    blackboard_position = 3.5 * RIGHT + 1.83 * UP
     animation_layers = 3
 
     animations = {i: [] for i in range(animation_layers)}
@@ -259,6 +304,11 @@ def process_events(keyboard_status, events):
                     Write(game_keyboard_header, run_time=run_time),
                 ]
             )
+        elif event_type == "create_blackboard":
+            letter = event["letter"]
+
+            blackboard, blackboard_letter = draw_blackboard_with_letter(blackboard_position, letter)
+            animations[0].append(FadeIn(blackboard, blackboard_letter, run_time=run_time))
         elif event_type == "move":
             letter = event["letter"]
 
@@ -297,6 +347,24 @@ def process_events(keyboard_status, events):
             previous_game_text = game_text
 
             animations[2].append(FadeOut(button_pressed, tooltip, run_time=run_time_per_step))
+        elif event_type == "blackboard_text":
+            text = event["text"]
+
+            blackboard_text = draw_blackboard_text(blackboard_position, text)
+            animations[0].append(Write(blackboard_text, run_time=run_time))
+        elif event_type == "blackboard_arrow":
+            position = event["position"]
+
+            arrow_position = blackboard_position + position
+            if blackboard_arrow is None:
+                blackboard_arrow = draw_blackboard_arrow(arrow_position)
+                animations[0].append(FadeIn(blackboard_arrow, run_time=run_time))
+            else:
+                animations[0].append(
+                    animate_blackboard_arrow_move(
+                        blackboard_arrow, arrow_position, run_time=run_time
+                    )
+                )
         elif event_type == "fade_out":
             animations[0].append(
                 FadeOut(
@@ -310,6 +378,18 @@ def process_events(keyboard_status, events):
                     run_time=run_time,
                 )
             )
+        elif event_type == "fade_out_blackboard":
+            animations[0].append(
+                FadeOut(
+                    blackboard,
+                    blackboard_letter,
+                    blackboard_text,
+                    run_time=run_time,
+                )
+            )
+        elif event_type == "fade_out_blackboard_arrow":
+            animations[0].append(FadeOut(blackboard_arrow, run_time=run_time))
+            blackboard_arrow = None
 
     keyboard_status["previous_real_text"] = previous_real_text
     keyboard_status["previous_game_text"] = previous_game_text
@@ -320,6 +400,10 @@ def process_events(keyboard_status, events):
     keyboard_status["real_keyboard_header"] = real_keyboard_header
     keyboard_status["game_keyboard_header"] = game_keyboard_header
     keyboard_status["position_circle"] = position_circle
+    keyboard_status["blackboard"] = blackboard
+    keyboard_status["blackboard_letter"] = blackboard_letter
+    keyboard_status["blackboard_text"] = blackboard_text
+    keyboard_status["blackboard_arrow"] = blackboard_arrow
 
     for i in range(animation_layers):
         animations_in_layer = animations[i]

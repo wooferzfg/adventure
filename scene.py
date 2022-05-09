@@ -676,6 +676,265 @@ class Blackboards(AdventureScene):
         self.pause(1)
 
 
+class BlackboardExample(AdventureScene):
+    def draw_scene(self):
+        keyboard_status = init_keyboard_status(self)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_keyboard",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_letters_typed_headers",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_position_circle",
+                    "letter": "H",
+                    "run_time": 2,
+                },
+            ],
+        )
+        self.pause(1)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "real_text",
+                    "letters": "a",
+                    "run_time": 0.7,
+                },
+            ],
+        )
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "real_text",
+                    "letters": "w",
+                    "run_time": 0.7,
+                },
+            ],
+        )
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "real_text",
+                    "letters": "p",
+                    "run_time": 0.7,
+                },
+            ],
+        )
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "real_text",
+                    "letters": "p",
+                    "run_time": 0.7,
+                },
+            ],
+        )
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "real_text",
+                    "letters": "p",
+                    "run_time": 0.7,
+                },
+            ],
+        )
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "real_text",
+                    "letters": "e",
+                    "run_time": 0.7,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_blackboard",
+                    "letter": "H",
+                    "run_time": 2,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_text",
+                    "text": "w p p p e",
+                    "run_time": 1,
+                },
+            ],
+        )
+
+        self.pause(3)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "real_text",
+                    "letters": "r",
+                    "run_time": 2,
+                },
+            ],
+        )
+        self.pause(3)
+
+        keyboard_status = BlackboardExample.animate_blackboard_read(self, keyboard_status, 0.9)
+        self.pause(3)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "real_text",
+                    "letters": "r",
+                    "run_time": 0.3,
+                },
+            ],
+        )
+        keyboard_status = BlackboardExample.animate_blackboard_read(self, keyboard_status, 0.3)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "real_text",
+                    "letters": "r",
+                    "run_time": 0.3,
+                },
+            ],
+        )
+        keyboard_status = BlackboardExample.animate_blackboard_read(self, keyboard_status, 0.3)
+        self.pause(1)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "fade_out_blackboard",
+                    "run_time": 1,
+                },
+                {
+                    "type": "fade_out",
+                    "run_time": 1,
+                },
+            ],
+        )
+
+        self.pause(1)
+
+    def animate_blackboard_read(self, keyboard_status, time_per_step):
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 0.99,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "G",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 0.48,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "button_press",
+                    "letter": "G",
+                    "run_time": time_per_step * 3,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": RIGHT * 0.02,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "button_press",
+                    "letter": "G",
+                    "run_time": time_per_step * 3,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": RIGHT * 0.52,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "button_press",
+                    "letter": "G",
+                    "run_time": time_per_step * 3,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": RIGHT * 1.02,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "H",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "fade_out_blackboard_arrow",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        return keyboard_status
+
+
 class AllScenes(AdventureScene):
     ALL_SCENES = [
         Intro,
@@ -686,6 +945,7 @@ class AllScenes(AdventureScene):
         GoalOfPuzzle,
         NavigatingPressingButtons,
         Blackboards,
+        BlackboardExample,
     ]
 
     def draw_scene(self):
