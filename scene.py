@@ -935,6 +935,73 @@ class BlackboardExample(AdventureScene):
         return keyboard_status
 
 
+class NineBlackboards(AdventureScene):
+    def draw_scene(self):
+        outlines, texts = draw_qwerty_keyboard(0, 1)
+        self.play(*animate_keyboard_create(outlines, texts, run_time=2))
+
+        blackboards_used_text = Text(
+            "Blackboards Used in Solution", color=BLACK, font=MAIN_FONT, font_size=48
+        ).move_to(UP * 2)
+        blackboard_outlines = NineBlackboards.draw_outlines(
+            ["A", "E", "N", "P", "R", "S", "W", "G", "H"]
+        )
+        self.play(
+            Write(blackboards_used_text, run_time=2),
+            FadeIn(*blackboard_outlines, run_time=2),
+        )
+        self.pause(1)
+        self.play(FadeOut(blackboards_used_text, *blackboard_outlines, run_time=1))
+
+        letters_text = Text(
+            "A, E, N, P, R, S, W", color=BLACK, font=MAIN_FONT, font_size=48
+        ).move_to(UP * 2)
+        blackboard_outlines = NineBlackboards.draw_outlines(["A", "E", "N", "P", "R", "S", "W"])
+        self.play(
+            Write(letters_text, run_time=2),
+            FadeIn(*blackboard_outlines, run_time=2),
+        )
+        self.pause(5)
+        self.play(FadeOut(letters_text, *blackboard_outlines, run_time=1))
+
+        main_blackboard_text = Text(
+            "Main Blackboard", color=BLACK, font=MAIN_FONT, font_size=48
+        ).move_to(UP * 2)
+        blackboard_outlines = NineBlackboards.draw_outlines(["G"])
+        self.play(
+            Write(main_blackboard_text, run_time=2),
+            FadeIn(*blackboard_outlines, run_time=2),
+        )
+        self.pause(6)
+        self.play(FadeOut(main_blackboard_text, *blackboard_outlines, run_time=1))
+
+        final_blackboard_text = Text(
+            "Final Blackboard", color=BLACK, font=MAIN_FONT, font_size=48
+        ).move_to(UP * 2)
+        blackboard_outlines = NineBlackboards.draw_outlines(["H"])
+        self.play(
+            Write(final_blackboard_text, run_time=2),
+            FadeIn(*blackboard_outlines, run_time=2),
+        )
+        self.pause(5)
+        self.play(FadeOut(final_blackboard_text, *blackboard_outlines, run_time=1))
+
+        self.play(FadeOut(*outlines, *texts, run_time=1))
+        self.pause(1)
+
+    def draw_outlines(letters):
+        outlines = []
+
+        for letter in letters:
+            row_index, column_index = INDEX_FOR_QWERTY_LETTER[letter]
+            position = position_for_index(row_index, column_index, 0, 1)
+            outlines.append(
+                draw_key_outline(position, color=YELLOW, fill_opacity=0, stroke_width=6)
+            )
+
+        return outlines
+
+
 class AllScenes(AdventureScene):
     ALL_SCENES = [
         Intro,
@@ -946,6 +1013,7 @@ class AllScenes(AdventureScene):
         NavigatingPressingButtons,
         Blackboards,
         BlackboardExample,
+        NineBlackboards,
     ]
 
     def draw_scene(self):
