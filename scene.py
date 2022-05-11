@@ -1010,6 +1010,178 @@ class NineBlackboards(AdventureScene):
         return outlines
 
 
+class StepOne(AdventureScene):
+    def draw_scene(self):
+        step_1_text = Text("Step 1", font_size=72, color=BLACK, font=MAIN_FONT)
+        self.play(Write(step_1_text, run_time=1))
+        self.play(FadeOut(step_1_text, run_time=1))
+
+        keyboard_status = init_keyboard_status(self)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_keyboard",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_position_circle",
+                    "letter": "H",
+                    "run_time": 2,
+                },
+            ],
+        )
+
+        time_per_step = 0.45
+
+        StepOne.write_on_blackboard(keyboard_status, "H", "w r w w nw p e p", time_per_step)
+        StepOne.move(keyboard_status, "N", "se", time_per_step)
+        StepOne.write_on_blackboard(
+            keyboard_status, "N", "p nw w a w w w p ne p p e p se e", time_per_step
+        )
+        StepOne.move(keyboard_status, "M", "e", time_per_step)
+        StepOne.move(keyboard_status, "K", "ne", time_per_step)
+        StepOne.move(keyboard_status, "O", "ne", time_per_step)
+        StepOne.move(keyboard_status, "P", "e", time_per_step)
+        StepOne.write_on_blackboard(
+            keyboard_status,
+            "P",
+            "p sw w w w w a se e p nw nw w w w p p p p p e p se e",
+            time_per_step,
+        )
+        StepOne.move(keyboard_status, "O", "w", time_per_step)
+        StepOne.move(keyboard_status, "I", "w", time_per_step)
+        StepOne.move(keyboard_status, "U", "w", time_per_step)
+        StepOne.move(keyboard_status, "Y", "w", time_per_step)
+        StepOne.move(keyboard_status, "T", "w", time_per_step)
+        StepOne.move(keyboard_status, "R", "w", time_per_step)
+        StepOne.write_on_blackboard(
+            keyboard_status, "R", "p se e a se e p nw nw w w w w p p e e p se e", time_per_step
+        )
+        StepOne.move(keyboard_status, "E", "w", time_per_step)
+        StepOne.write_on_blackboard(
+            keyboard_status,
+            "E",
+            "p se e e a se e p nw nw w w w w p p p e e p se e",
+            time_per_step,
+        )
+        StepOne.move(keyboard_status, "W", "w", time_per_step)
+        StepOne.write_on_blackboard(
+            keyboard_status,
+            "W",
+            "p se e e e a se e p nw nw w w w w p p p p e e p se e",
+            time_per_step,
+        )
+        StepOne.move(keyboard_status, "A", "sw", time_per_step)
+        StepOne.write_on_blackboard(
+            keyboard_status, "A", "p e e e e a nw w w w p p p p e e p se e", time_per_step
+        )
+        StepOne.move(keyboard_status, "S", "e", time_per_step)
+        StepOne.write_on_blackboard(
+            keyboard_status, "S", "p e e e a nw w w w p p p e e p se e", time_per_step
+        )
+        StepOne.move(keyboard_status, "D", "e", time_per_step)
+        StepOne.move(keyboard_status, "F", "e", time_per_step)
+        StepOne.move(keyboard_status, "G", "e", time_per_step)
+
+        process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "fade_out_keyboard",
+                    "run_time": 1,
+                },
+                {
+                    "type": "fade_out_commands",
+                    "run_time": 1,
+                },
+            ],
+        )
+
+        step_1_header = Text(
+            "Letters Typed on Real Keyboard in Step 1",
+            color=BLACK,
+            font_size=40,
+            font=MAIN_FONT,
+        ).move_to(UP * 3.25)
+        step_1_commands = Text(
+            "awrwwnwpepseapnwwawwwpneppepseeenen\neeapswwwwwaseepnwnwwwwpppppepseewww\nwwwapseeaseepnwnwwwwwppeepseewapsee\neaseepnwnwwwwwpppeepseewapseeeeasee\npnwnwwwwwppppeepseeswapeeeeanwwwwpp\nppeepseeeapeeeanwwwwpppeepseeeee",
+            color=BLACK,
+            width=13.2,
+            font_size=24,
+            font=TERMINAL_FONT,
+            line_spacing=0.5,
+        )
+        self.play(
+            Write(step_1_header, run_time=1), FadeIn(step_1_commands, lag_ratio=0.4, run_time=3)
+        )
+        self.pause(3)
+        self.play(FadeOut(step_1_commands, step_1_header, run_time=1))
+
+        self.pause(1)
+
+    def write_on_blackboard(keyboard_status, letter, commands, time_per_step):
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_blackboard",
+                    "letter": letter,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "add_command",
+                    "command": f"a {commands}",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_text",
+                    "text": commands,
+                    "run_time": time_per_step,
+                }
+            ],
+        )
+        keyboard_status["scene"].pause(time_per_step / 2)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "fade_out_blackboard",
+                    "run_time": time_per_step / 2,
+                }
+            ],
+        )
+
+        return keyboard_status
+
+    def move(keyboard_status, letter, command, time_per_step):
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": letter,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "add_command",
+                    "command": command,
+                    "run_time": time_per_step / 2,
+                },
+            ],
+        )
+
+        return keyboard_status
+
+
 class AllScenes(AdventureScene):
     ALL_SCENES = [
         Intro,
@@ -1022,6 +1194,7 @@ class AllScenes(AdventureScene):
         Blackboards,
         BlackboardExample,
         NineBlackboards,
+        StepOne,
     ]
 
     def draw_scene(self):

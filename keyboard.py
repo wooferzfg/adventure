@@ -191,11 +191,55 @@ def draw_blackboard_with_letter(position, letter):
 
 
 def draw_blackboard_text(position, text):
-    width = 5 if ("\n" in text) else None
+    updated_text = "\n".join(split_text(text, 20))
+
+    width = 5 if ("\n" in updated_text) else None
 
     return Text(
-        text, color=WHITE, font_size=36, font=TERMINAL_FONT, width=width, line_spacing=2
+        updated_text, color=WHITE, font_size=36, font=TERMINAL_FONT, width=width, line_spacing=2
     ).move_to(position)
+
+
+def draw_command(command):
+    updated_command = "\n  ".join(split_text(command, 26))
+
+    width = 6 if ("\n" in updated_command) else None
+    scale = 1 if ("\n" in updated_command) else 1.05
+
+    return (
+        Text(f"> {updated_command}", font_size=28, font=TERMINAL_FONT, color=BLACK, width=width)
+        .scale(scale)
+        .align_on_border(LEFT, buff=0.5)
+        .shift(UP * 0.3)
+    )
+
+
+def split_text(text, line_length):
+    result = []
+    current_line = ""
+
+    for letters in text.split():
+        if len(current_line) >= line_length:
+            result.append(current_line)
+            current_line = ""
+
+        current_line += f" {letters}" if current_line else letters
+
+    if current_line:
+        result.append(current_line)
+
+    return result
+
+
+def shift_previous_commands(commands, run_time):
+    animations = []
+
+    for command in commands:
+        command.generate_target()
+        command.target.shift(UP * 1.05)
+        animations.append(MoveToTarget(command, run_time=run_time))
+
+    return animations
 
 
 def init_keyboard_status(scene):
@@ -214,6 +258,7 @@ def init_keyboard_status(scene):
         "blackboard_letter": None,
         "blackboard_text": None,
         "blackboard_arrow": None,
+        "commands": [],
     }
 
 
@@ -253,6 +298,10 @@ def process_events(keyboard_status, events):
     - position
     - run_time
 
+    type: add_command
+    - command
+    - run_time
+
     type: fade_out
     - run_time
 
@@ -263,6 +312,9 @@ def process_events(keyboard_status, events):
     - run_time
 
     type: fade_out_blackboard_arrow
+    - run_time
+
+    type: fade_out_commands
     - run_time
     """
 
@@ -280,6 +332,7 @@ def process_events(keyboard_status, events):
     blackboard_letter = keyboard_status["blackboard_letter"]
     blackboard_text = keyboard_status["blackboard_text"]
     blackboard_arrow = keyboard_status["blackboard_arrow"]
+    commands = keyboard_status["commands"]
 
     x_offset = 0
     y_offset = 2.25
@@ -369,6 +422,17 @@ def process_events(keyboard_status, events):
                         blackboard_arrow, arrow_position, run_time=run_time
                     )
                 )
+        elif event_type == "add_command":
+            command = event["command"]
+
+            command_element = draw_command(command)
+            animations[0].extend(
+                [
+                    FadeIn(command_element, lag_ratio=0.4, run_time=run_time),
+                    *shift_previous_commands(commands, run_time=run_time * 0.7),
+                ]
+            )
+            commands.append(command_element)
         elif event_type == "fade_out_keyboard":
             animations[0].append(
                 FadeOut(
@@ -400,6 +464,8 @@ def process_events(keyboard_status, events):
         elif event_type == "fade_out_blackboard_arrow":
             animations[0].append(FadeOut(blackboard_arrow, run_time=run_time))
             blackboard_arrow = None
+        elif event_type == "fade_out_commands":
+            animations[0].append(FadeOut(*commands, run_time=run_time))
 
     keyboard_status["previous_real_text"] = previous_real_text
     keyboard_status["previous_game_text"] = previous_game_text
@@ -414,6 +480,7 @@ def process_events(keyboard_status, events):
     keyboard_status["blackboard_letter"] = blackboard_letter
     keyboard_status["blackboard_text"] = blackboard_text
     keyboard_status["blackboard_arrow"] = blackboard_arrow
+    keyboard_status["commands"] = commands
 
     for i in range(animation_layers):
         animations_in_layer = animations[i]
