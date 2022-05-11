@@ -1104,7 +1104,8 @@ class StepOne(AdventureScene):
             color=BLACK,
             font_size=40,
             font=MAIN_FONT,
-        ).move_to(UP * 3.25)
+        ).move_to(UP * 2.5)
+
         step_1_commands = Text(
             "awrwwnwpepseapnwwawwwpneppepseeenen\neeapswwwwwaseepnwnwwwwpppppepseewww\nwwwapseeaseepnwnwwwwwppeepseewapsee\neaseepnwnwwwwwpppeepseewapseeeeasee\npnwnwwwwwppppeepseeswapeeeeanwwwwpp\nppeepseeeapeeeanwwwwpppeepseeeee",
             color=BLACK,
@@ -1112,7 +1113,8 @@ class StepOne(AdventureScene):
             font_size=24,
             font=TERMINAL_FONT,
             line_spacing=0.5,
-        )
+        ).move_to(DOWN * 0.75)
+
         self.play(
             Write(step_1_header, run_time=1), FadeIn(step_1_commands, lag_ratio=0.4, run_time=3)
         )
