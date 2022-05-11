@@ -256,6 +256,9 @@ def process_events(keyboard_status, events):
     type: fade_out
     - run_time
 
+    type: fade_out_logs
+    - run_time
+
     type: fade_out_blackboard
     - run_time
 
@@ -366,16 +369,22 @@ def process_events(keyboard_status, events):
                         blackboard_arrow, arrow_position, run_time=run_time
                     )
                 )
-        elif event_type == "fade_out":
+        elif event_type == "fade_out_keyboard":
+            animations[0].append(
+                FadeOut(
+                    *outlines,
+                    *texts,
+                    position_circle,
+                    run_time=run_time,
+                )
+            )
+        elif event_type == "fade_out_logs":
             animations[0].append(
                 FadeOut(
                     previous_real_text,
                     previous_game_text,
-                    *outlines,
-                    *texts,
                     real_keyboard_header,
                     game_keyboard_header,
-                    position_circle,
                     run_time=run_time,
                 )
             )

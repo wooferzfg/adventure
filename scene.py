@@ -634,7 +634,11 @@ class NavigatingPressingButtons(AdventureScene):
             keyboard_status,
             [
                 {
-                    "type": "fade_out",
+                    "type": "fade_out_keyboard",
+                    "run_time": 1,
+                },
+                {
+                    "type": "fade_out_logs",
                     "run_time": 1,
                 },
             ],
@@ -833,7 +837,11 @@ class BlackboardExample(AdventureScene):
                     "run_time": 1,
                 },
                 {
-                    "type": "fade_out",
+                    "type": "fade_out_keyboard",
+                    "run_time": 1,
+                },
+                {
+                    "type": "fade_out_logs",
                     "run_time": 1,
                 },
             ],
