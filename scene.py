@@ -782,6 +782,7 @@ class BlackboardExample(AdventureScene):
                 {
                     "type": "blackboard_text",
                     "text": "w p p p e",
+                    "transition": "write",
                     "run_time": 1,
                 },
             ],
@@ -1123,6 +1124,7 @@ class StepOne(AdventureScene):
                 {
                     "type": "blackboard_text",
                     "text": commands,
+                    "transition": "write",
                     "run_time": time_per_step,
                 }
             ],
@@ -1227,6 +1229,184 @@ class StepTwo(AdventureScene):
                 },
             ],
         )
+        self.pause(1)
+
+        time_per_step = 1
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "F",
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "w",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "D",
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "w",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "S",
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "w",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "A",
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "w",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        self.pause(2)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_blackboard",
+                    "letter": "A",
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "r",
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "blackboard_text",
+                    "text": "p e e e e a nw w w w p p p p e e p se e",
+                    "transition": "fade",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        self.pause(6)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 2.4 + UP * 0.56,
+                    "run_time": 1.5,
+                },
+                {
+                    "type": "button_press",
+                    "letter": "A",
+                    "run_time": 4.5,
+                },
+            ],
+        )
+
+        self.pause(7)
+
+        time_per_step = 1
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 1.89 + UP * 0.56,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "S",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 1.39 + UP * 0.56,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "D",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 0.89 + UP * 0.56,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "F",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 0.38 + UP * 0.56,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "G",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
         self.pause(1)
 
 
