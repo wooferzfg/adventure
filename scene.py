@@ -1182,8 +1182,7 @@ class StepTwo(AdventureScene):
         self.play(
             Write(step_1_header, run_time=1), FadeIn(step_1_commands, lag_ratio=0.4, run_time=3)
         )
-        self.pause(5)
-        self.play(FadeOut(step_1_header, run_time=1))
+        self.pause(3)
 
         a_text = (
             Text("a", color=BLACK, font_size=40, font=TERMINAL_FONT)
@@ -1191,7 +1190,10 @@ class StepTwo(AdventureScene):
             .align_on_border(LEFT, buff=1.142)
         )
         step_2_text = Text("Step 2", font_size=72, color=BLACK, font=MAIN_FONT)
-        self.play(*animate_text_remove_letters(a_text, step_1_commands, run_time=1))
+        self.play(
+            FadeOut(step_1_header, run_time=2),
+            *animate_text_remove_letters(a_text, step_1_commands, run_time=2),
+        )
         self.play(Write(step_2_text, run_time=1))
         self.pause(1)
 
