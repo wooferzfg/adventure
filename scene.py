@@ -1098,29 +1098,6 @@ class StepOne(AdventureScene):
                 },
             ],
         )
-
-        step_1_header = Text(
-            "Letters Typed on Real Keyboard in Step 1",
-            color=BLACK,
-            font_size=40,
-            font=MAIN_FONT,
-        ).move_to(UP * 2.5)
-
-        step_1_commands = Text(
-            "awrwwnwpepseapnwwawwwpneppepseeenen\neeapswwwwwaseepnwnwwwwpppppepseewww\nwwwapseeaseepnwnwwwwwppeepseewapsee\neaseepnwnwwwwwpppeepseewapseeeeasee\npnwnwwwwwppppeepseeswapeeeeanwwwwpp\nppeepseeeapeeeanwwwwpppeepseeeee",
-            color=BLACK,
-            width=13.2,
-            font_size=24,
-            font=TERMINAL_FONT,
-            line_spacing=0.5,
-        ).move_to(DOWN * 0.75)
-
-        self.play(
-            Write(step_1_header, run_time=1), FadeIn(step_1_commands, lag_ratio=0.4, run_time=3)
-        )
-        self.pause(3)
-        self.play(FadeOut(step_1_commands, step_1_header, run_time=1))
-
         self.pause(1)
 
     def write_on_blackboard(keyboard_status, letter, commands, time_per_step):
@@ -1184,6 +1161,73 @@ class StepOne(AdventureScene):
         return keyboard_status
 
 
+class StepTwo(AdventureScene):
+    def draw_scene(self):
+        step_1_header = Text(
+            "Letters Typed on Real Keyboard in Step 1",
+            color=BLACK,
+            font_size=40,
+            font=MAIN_FONT,
+        ).move_to(UP * 2.5)
+
+        step_1_commands = Text(
+            "awrwwnwpepseapnwwawwwpneppepseeenen\neeapswwwwwaseepnwnwwwwpppppepseewww\nwwwapseeaseepnwnwwwwwppeepseewapsee\neaseepnwnwwwwwpppeepseewapseeeeasee\npnwnwwwwwppppeepseeswapeeeeanwwwwpp\nppeepseeeapeeeanwwwwpppeepseeeee",
+            color=BLACK,
+            width=12,
+            font_size=24,
+            font=TERMINAL_FONT,
+            line_spacing=0.5,
+        ).move_to(DOWN * 0.75)
+
+        self.play(
+            Write(step_1_header, run_time=1), FadeIn(step_1_commands, lag_ratio=0.4, run_time=3)
+        )
+        self.pause(5)
+        self.play(FadeOut(step_1_header, run_time=1))
+
+        a_text = (
+            Text("a", color=BLACK, font_size=40, font=TERMINAL_FONT)
+            .move_to(UP * 0.92)
+            .align_on_border(LEFT, buff=1.142)
+        )
+        step_2_text = Text("Step 2", font_size=72, color=BLACK, font=MAIN_FONT)
+        self.play(*animate_text_remove_letters(a_text, step_1_commands, run_time=1))
+        self.play(Write(step_2_text, run_time=1))
+        self.pause(1)
+
+        a_text.generate_target()
+        a_text.target.align_on_border(UP, buff=1.05).align_on_border(LEFT, buff=0.5)
+        self.play(MoveToTarget(a_text, run_time=1), FadeOut(step_2_text, run_time=1))
+
+        keyboard_status = init_keyboard_status(self)
+        keyboard_status["previous_real_text"] = a_text
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_keyboard",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_letters_typed_headers",
+                    "run_time": 2,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "a ... ",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_position_circle",
+                    "letter": "H",
+                    "run_time": 2,
+                },
+            ],
+        )
+        self.pause(1)
+
+
 class AllScenes(AdventureScene):
     ALL_SCENES = [
         Intro,
@@ -1197,6 +1241,7 @@ class AllScenes(AdventureScene):
         BlackboardExample,
         NineBlackboards,
         StepOne,
+        StepTwo,
     ]
 
     def draw_scene(self):
