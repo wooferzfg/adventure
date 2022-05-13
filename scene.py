@@ -1222,7 +1222,7 @@ class StepTwo(AdventureScene):
                 },
                 {
                     "type": "create_position_circle",
-                    "letter": "H",
+                    "letter": "G",
                     "run_time": 2,
                 },
             ],
