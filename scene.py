@@ -1411,7 +1411,7 @@ class StepTwo(AdventureScene):
 
         self.pause(7)
 
-        wwwwr_highlight = Rectangle(color=YELLOW, width=1.8, height=0.6).move_to(
+        wwwwr_highlight = Rectangle(color="#f2db05", width=1.8, height=0.6, stroke_width=6).move_to(
             UP * 2.81 + LEFT * 4.1
         )
         self.play(FadeIn(wwwwr_highlight, run_time=2))
@@ -1462,15 +1462,15 @@ class StepTwo(AdventureScene):
         arrow = keyboard_status["blackboard_arrow"]
         arrow.generate_target()
         arrow.target.shift(RIGHT * 2.25)
-        self.play(MoveToTarget(arrow, run_time=0.8))
+        self.play(MoveToTarget(arrow, run_time=0.5, rate_func=rate_functions.linear))
 
         arrow.generate_target()
         arrow.target.shift(LEFT * 4.75 + DOWN * 1.125)
-        self.play(MoveToTarget(arrow, run_time=0.8))
+        self.play(MoveToTarget(arrow, run_time=0.8, rate_func=rate_functions.ease_in_out_cubic))
 
         arrow.generate_target()
         arrow.target.shift(RIGHT * 4.25)
-        self.play(MoveToTarget(arrow, run_time=0.8))
+        self.play(MoveToTarget(arrow, run_time=0.8, rate_func=rate_functions.linear))
 
         g_blackboard_text = draw_blackboard_text(
             g_blackboard_position, "nw w w w p p p p e e p se e"
