@@ -307,7 +307,7 @@ def process_events(keyboard_status, events):
     - command
     - run_time
 
-    type: fade_out
+    type: fade_out_keyboard
     - run_time
 
     type: fade_out_logs
