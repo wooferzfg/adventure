@@ -1462,20 +1462,20 @@ class StepTwo(AdventureScene):
         arrow = keyboard_status["blackboard_arrow"]
         arrow.generate_target()
         arrow.target.shift(RIGHT * 2.25)
-        self.play(MoveToTarget(arrow, run_time=0.6))
+        self.play(MoveToTarget(arrow, run_time=0.8))
 
         arrow.generate_target()
         arrow.target.shift(LEFT * 4.75 + DOWN * 1.125)
-        self.play(MoveToTarget(arrow, run_time=0.6))
+        self.play(MoveToTarget(arrow, run_time=0.8))
 
         arrow.generate_target()
         arrow.target.shift(RIGHT * 4.25)
-        self.play(MoveToTarget(arrow, run_time=0.6))
+        self.play(MoveToTarget(arrow, run_time=0.8))
 
         g_blackboard_text = draw_blackboard_text(
             g_blackboard_position, "nw w w w p p p p e e p se e"
         )
-        self.play(Write(g_blackboard_text, run_time=1))
+        self.play(Write(g_blackboard_text, run_time=1), FadeOut(arrow, run_time=1))
         self.pause(1)
 
 
