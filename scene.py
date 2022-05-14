@@ -14,6 +14,8 @@ from keyboard import (
     animate_keyboard_outlines,
     animate_keyboard_texts,
     draw_blackboard_arrow,
+    draw_blackboard_text,
+    draw_blackboard_with_letter,
     draw_dungeon_keyboard,
     draw_key_outline,
     draw_qwerty_keyboard,
@@ -1407,6 +1409,73 @@ class StepTwo(AdventureScene):
             ],
         )
 
+        self.pause(7)
+
+        wwwwr_highlight = Rectangle(color=YELLOW, width=1.8, height=0.6).move_to(
+            UP * 2.81 + LEFT * 4.1
+        )
+        self.play(FadeIn(wwwwr_highlight, run_time=2))
+        self.pause(5)
+        self.play(FadeOut(wwwwr_highlight, run_time=1))
+        self.pause(1)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": RIGHT * 0.12 + UP * 0.56,
+                    "run_time": 1,
+                },
+            ],
+        )
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "fade_out_keyboard",
+                    "run_time": 1,
+                },
+                {
+                    "type": "fade_out_logs",
+                    "run_time": 1,
+                },
+            ],
+        )
+
+        shift_animations = []
+        for element in [
+            keyboard_status["blackboard"],
+            keyboard_status["blackboard_letter"],
+            keyboard_status["blackboard_text"],
+            keyboard_status["blackboard_arrow"],
+        ]:
+            element.generate_target()
+            element.target.shift(LEFT * 3.5 + UP * 0.12)
+            shift_animations.append(MoveToTarget(element, run_time=1))
+
+        g_blackboard_position = DOWN * 1.95
+        g_blackboard, g_letter = draw_blackboard_with_letter(g_blackboard_position, "G")
+
+        self.play(*shift_animations, FadeIn(g_blackboard, g_letter, run_time=2))
+
+        arrow = keyboard_status["blackboard_arrow"]
+        arrow.generate_target()
+        arrow.target.shift(RIGHT * 2.25)
+        self.play(MoveToTarget(arrow, run_time=0.6))
+
+        arrow.generate_target()
+        arrow.target.shift(LEFT * 4.75 + DOWN * 1.125)
+        self.play(MoveToTarget(arrow, run_time=0.6))
+
+        arrow.generate_target()
+        arrow.target.shift(RIGHT * 4.25)
+        self.play(MoveToTarget(arrow, run_time=0.6))
+
+        g_blackboard_text = draw_blackboard_text(
+            g_blackboard_position, "nw w w w p p p p e e p se e"
+        )
+        self.play(Write(g_blackboard_text, run_time=1))
         self.pause(1)
 
 
