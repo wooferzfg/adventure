@@ -1529,6 +1529,12 @@ class StepTwo(AdventureScene):
                     "letters": "A ... ",
                     "run_time": 2,
                 },
+                {
+                    "type": "blackboard_text",
+                    "text": "nw w w w p p p p e e p se e ...",
+                    "transition": "fade",
+                    "run_time": 2,
+                },
             ],
         )
         self.pause(1)

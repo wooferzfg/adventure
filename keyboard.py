@@ -421,9 +421,14 @@ def process_events(keyboard_status, events):
             text = event["text"]
             transition = event["transition"]
 
+            previous_blackboard_text = blackboard_text
             blackboard_text = draw_blackboard_text(blackboard_position, text)
             if transition == "fade":
-                animations[0].append(FadeIn(blackboard_text, run_time=run_time))
+                animations[0].extend(
+                    animate_text_add_letters(
+                        blackboard_text, previous_blackboard_text, run_time=run_time
+                    )
+                )
             elif transition == "write":
                 animations[0].append(Write(blackboard_text, run_time=run_time))
         elif event_type == "blackboard_arrow":
@@ -478,6 +483,7 @@ def process_events(keyboard_status, events):
                     run_time=run_time,
                 )
             )
+            blackboard_text = None
         elif event_type == "fade_out_blackboard_arrow":
             animations[0].append(FadeOut(blackboard_arrow, run_time=run_time))
             blackboard_arrow = None
