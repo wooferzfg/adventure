@@ -1478,6 +1478,61 @@ class StepTwo(AdventureScene):
         self.play(Write(g_blackboard_text, run_time=1), FadeOut(arrow, run_time=1))
         self.pause(1)
 
+        shift_animations = []
+        for element in [
+            g_blackboard,
+            g_letter,
+            g_blackboard_text,
+        ]:
+            element.generate_target()
+            element.target.shift(RIGHT * 3.5 + UP * 3.78)
+            shift_animations.append(MoveToTarget(element, run_time=1.5))
+
+        self.play(
+            FadeOut(
+                keyboard_status["blackboard"],
+                keyboard_status["blackboard_letter"],
+                keyboard_status["blackboard_text"],
+                run_time=1,
+            ),
+        )
+        self.play(*shift_animations)
+
+        keyboard_status = init_keyboard_status(self)
+        keyboard_status["blackboard"] = g_blackboard
+        keyboard_status["blackboard_letter"] = g_letter
+        keyboard_status["blackboard_text"] = g_blackboard_text
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_keyboard",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_position_circle",
+                    "letter": "G",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_letters_typed_headers",
+                    "run_time": 2,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "a ... wwwwr ... ",
+                    "run_time": 2,
+                },
+                {
+                    "type": "game_text",
+                    "letters": "A ... ",
+                    "run_time": 2,
+                },
+            ],
+        )
+        self.pause(1)
+
 
 class AllScenes(AdventureScene):
     ALL_SCENES = [

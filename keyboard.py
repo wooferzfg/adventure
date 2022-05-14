@@ -286,6 +286,10 @@ def process_events(keyboard_status, events):
     - letters
     - run_time
 
+    type: game_text
+    - letters
+    - run_time
+
     type: button_press
     - letter
     - run_time
@@ -383,6 +387,14 @@ def process_events(keyboard_status, events):
                 animate_text_add_letters(real_text, previous_real_text, run_time=run_time)
             )
             previous_real_text = real_text
+        elif event_type == "game_text":
+            game_letters += event["letters"]
+
+            game_text = draw_game_letters_text(game_letters)
+            animations[0].extend(
+                animate_text_add_letters(game_text, previous_game_text, run_time=run_time)
+            )
+            previous_game_text = game_text
         elif event_type == "button_press":
             letter = event["letter"]
 
