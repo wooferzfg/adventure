@@ -28,6 +28,7 @@ from text_animations import animate_text_add_letters, animate_text_remove_letter
 
 STEP_1_TEXT = "awrwwnwpepseapnwwawwwpneppepseeeneneeapswwwwwaseepnwnwwwwpppppepseewwwwwwapseeaseepnwnwwwwwppeepseewapseeeaseepnwnwwwwwpppeepseewapseeeeaseepnwnwwwwwppppeepseeswapeeeeanwwwwppppeepseeeapeeeanwwwwpppeepseeeee"
 STEP_2_TEXT = "wwwwrnwwwwrnwwrnwwwwrnwwwwrseernwwwwrneeeeernwwwrneeeeerwwwrnwwwrwwwwrneeeeerseernwwwwrnwwwwrwwwwrnwwwwrnwwwwrnwwwwrneeeeerseernwwwrneeeeerneeeeernwwwrneeeeerwwwrnwwwrnwwwrnwwwrseernwwwrseernwwwrnwwwrwwwwrneeeeerwwwrnwwwwrnwwwwrnwwwwrnwwwwrnwwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeerneeeeerneeeeernwwwrneeeeerwwwrnwwwrnwwwrnwwwwrnwwwwrnwwwwrnwwwwrnwwwwrnwwwwrwwwwrneeeeerwwwrnwwwrnwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwwrwwwwrneeeeerwwwrnwwwrnwwwrnwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwwrwwwwrneeeeerwwwrnwwwrnwwwrnwwwrnwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrwwwrnwwwwrwwwwrneeeeernwwwrnwwwrnwwwrnwwwrwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwrwwwwrneeeeernwwwrnwwwrnwwwrwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwrnwwwrnwwwr"
+G_BLACKBOARD_TEXT = "nw w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e"
 
 
 class AdventureScene(Scene):
@@ -1861,9 +1862,42 @@ class RepeatStepTwo(AdventureScene):
 
         self.play(
             Write(step_2_real_header, run_time=1),
-            FadeIn(step_2_real_commands, lag_ratio=0.4, run_time=3),
+            FadeIn(step_2_real_commands, lag_ratio=0.4, run_time=5),
         )
-        self.pause(3)
+        self.pause(1)
+
+        self.play(
+            FadeOut(
+                step_1_real_header,
+                step_1_real_commands,
+                step_2_game_header,
+                step_2_game_commands,
+                step_2_real_header,
+                run_time=1,
+            )
+        )
+
+        g_blackboard, g_letter = draw_blackboard_with_letter(DOWN * 1.25, "G")
+        step_2_real_commands.generate_target()
+        step_2_real_commands.target.move_to(UP * 2.25)
+        self.play(
+            MoveToTarget(step_2_real_commands, run_time=1.5),
+            FadeIn(g_blackboard, g_letter, run_time=3),
+        )
+
+        blackboard_text = Text(
+            "\n".join(split_text(G_BLACKBOARD_TEXT, 140)),
+            color=WHITE,
+            font=TERMINAL_FONT,
+            width=5.8,
+            line_spacing=0.1,
+        ).move_to(DOWN * 1.25)
+        self.play(Write(blackboard_text, run_time=4))
+
+        self.pause(1)
+
+        self.play(FadeOut(step_2_real_commands, g_blackboard, g_letter, blackboard_text, run_time=1))
+        self.pause(1)
 
 
 class AllScenes(AdventureScene):
