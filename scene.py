@@ -1797,10 +1797,10 @@ class RepeatStepTwo(AdventureScene):
 
         step_1_real_commands = (
             Text(
-                "\n".join(split_text(STEP_1_TEXT, 70, False)),
+                "\n".join(split_text(STEP_1_TEXT, 69, False)),
                 color=BLACK,
                 width=12,
-                font_size=16,
+                font_size=14,
                 font=TERMINAL_FONT,
                 line_spacing=0.5,
             )
@@ -1819,11 +1819,11 @@ class RepeatStepTwo(AdventureScene):
             color=BLACK,
             font_size=32,
             font=MAIN_FONT,
-        ).move_to(UP * 1)
+        ).move_to(UP * 1.1)
 
         step_2_game_commands = (
             Text(
-                "AWRWWNWPEPSEAPNWWAWWWPNEPPEPSEEENENEEAPSWWWWWASEEPNWNWW\nWWPPPPPEPSEEWWWWWWAPSEEASEEPNWNWWWWWPPEEPSEEWAPSEEEASEEPN\nWNWWWWWPPPEEPSEEWAPSEEEEASEEPNWNWWWWWPPPPEEPSEESWAPEEEEANW\nWWWPPPPEEPSEEEAPEEEANWWWWPPPEEPSEEEEE",
+                "AWRWWNWPEPSEAPNWWAWWWPNEPPEPSEEENENEEAPSWWWWWASEEPNWNWW\nWWPPPPPEPSEEWWWWWWAPSEEASEEPNWNWWWWWPPEEPSEEWAPSEEEASEEPN\nWNWWWWWPPPEEPSEEWAPSEEEEASEEPNWNWWWWWPPPPEEPSEESWAPEEEEAN\nWWWWPPPPEEPSEEEAPEEEANWWWWPPPEEPSEEEEE",
                 color=QWERTY_COLOR,
                 width=12,
                 font_size=24,
