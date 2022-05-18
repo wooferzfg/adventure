@@ -214,16 +214,17 @@ def draw_command(command):
     )
 
 
-def split_text(text, line_length):
+def split_text(text, line_length, has_spaces=True):
     result = []
     current_line = ""
+    text_list = text.split() if has_spaces else text
 
-    for letters in text.split():
+    for letters in text_list:
         if len(current_line) >= line_length:
             result.append(current_line)
             current_line = ""
 
-        current_line += f" {letters}" if current_line else letters
+        current_line += f" {letters}" if (current_line and has_spaces) else letters
 
     if current_line:
         result.append(current_line)

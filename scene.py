@@ -22,8 +22,12 @@ from keyboard import (
     init_keyboard_status,
     position_for_index,
     process_events,
+    split_text,
 )
 from text_animations import animate_text_add_letters, animate_text_remove_letters
+
+STEP_1_TEXT = "awrwwnwpepseapnwwawwwpneppepseeeneneeapswwwwwaseepnwnwwwwpppppepseewwwwwwapseeaseepnwnwwwwwppeepseewapseeeaseepnwnwwwwwpppeepseewapseeeeaseepnwnwwwwwppppeepseeswapeeeeanwwwwppppeepseeeapeeeanwwwwpppeepseeeee"
+STEP_2_TEXT = "wwwwrnwwwwrnwwrnwwwwrnwwwwrseernwwwwrneeeeernwwwrneeeeerwwwrnwwwrwwwwrneeeeerseernwwwwrnwwwwrwwwwrnwwwwrnwwwwrnwwwwrneeeeerseernwwwrneeeeerneeeeernwwwrneeeeerwwwrnwwwrnwwwrnwwwrseernwwwrseernwwwrnwwwrwwwwrneeeeerwwwrnwwwwrnwwwwrnwwwwrnwwwwrnwwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeerneeeeerneeeeernwwwrneeeeerwwwrnwwwrnwwwrnwwwwrnwwwwrnwwwwrnwwwwrnwwwwrnwwwwrwwwwrneeeeerwwwrnwwwrnwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwwrwwwwrneeeeerwwwrnwwwrnwwwrnwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwwrwwwwrneeeeerwwwrnwwwrnwwwrnwwwrnwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrwwwrnwwwwrwwwwrneeeeernwwwrnwwwrnwwwrnwwwrwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwrwwwwrneeeeernwwwrnwwwrnwwwrwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwrnwwwrnwwwr"
 
 
 class AdventureScene(Scene):
@@ -1175,7 +1179,7 @@ class StepTwo(AdventureScene):
         ).move_to(UP * 2.5)
 
         step_1_commands = Text(
-            "awrwwnwpepseapnwwawwwpneppepseeenen\neeapswwwwwaseepnwnwwwwpppppepseewww\nwwwapseeaseepnwnwwwwwppeepseewapsee\neaseepnwnwwwwwpppeepseewapseeeeasee\npnwnwwwwwppppeepseeswapeeeeanwwwwpp\nppeepseeeapeeeanwwwwpppeepseeeee",
+            "\n".join(split_text(STEP_1_TEXT, 35, False)),
             color=BLACK,
             width=12,
             font_size=24,
@@ -1781,6 +1785,87 @@ class StepTwo(AdventureScene):
         self.pause(1)
 
 
+class RepeatStepTwo(AdventureScene):
+    def draw_scene(self):
+        step_1_real_header = Text(
+            "Letters Typed on Real Keyboard in Step 1:",
+            color=BLACK,
+            font_size=32,
+            font=MAIN_FONT,
+        ).move_to(UP * 3.3)
+
+        step_1_real_commands = (
+            Text(
+                "\n".join(split_text(STEP_1_TEXT, 70, False)),
+                color=BLACK,
+                width=12,
+                font_size=16,
+                font=TERMINAL_FONT,
+                line_spacing=0.5,
+            )
+            .align_to(step_1_real_header, UP)
+            .shift(DOWN * 0.75)
+        )
+
+        self.play(
+            Write(step_1_real_header, run_time=1),
+            FadeIn(step_1_real_commands, lag_ratio=0.4, run_time=3),
+        )
+        self.pause(5)
+
+        step_2_game_header = Text(
+            "Letters Typed on Game Keyboard in Step 2:",
+            color=BLACK,
+            font_size=32,
+            font=MAIN_FONT,
+        ).move_to(UP * 1)
+
+        step_2_game_commands = (
+            Text(
+                "AWRWWNWPEPSEAPNWWAWWWPNEPPEPSEEENENEEAPSWWWWWASEEPNWNWW\nWWPPPPPEPSEEWWWWWWAPSEEASEEPNWNWWWWWPPEEPSEEWAPSEEEASEEPN\nWNWWWWWPPPEEPSEEWAPSEEEEASEEPNWNWWWWWPPPPEEPSEESWAPEEEEANW\nWWWPPPPEEPSEEEAPEEEANWWWWPPPEEPSEEEEE",
+                color=QWERTY_COLOR,
+                width=12,
+                font_size=24,
+                font=MAIN_FONT,
+                line_spacing=0.5,
+            )
+            .align_to(step_2_game_header, UP)
+            .shift(DOWN * 0.75)
+        )
+
+        self.play(
+            Write(step_2_game_header, run_time=1),
+            FadeIn(step_2_game_commands, lag_ratio=0.4, run_time=3),
+        )
+        self.pause(3)
+
+        step_2_real_header = Text(
+            "Letters Typed on Real Keyboard in Step 2:",
+            color=BLACK,
+            font_size=32,
+            font=MAIN_FONT,
+        ).move_to(DOWN * 1.45)
+
+        step_2_real_commands = (
+            Text(
+                "\n".join(split_text(STEP_2_TEXT, 120, False)),
+                color=BLACK,
+                width=12,
+                font_size=24,
+                font=TERMINAL_FONT,
+                line_spacing=0.25,
+            )
+            .align_to(step_2_real_header, UP)
+            .shift(DOWN * 0.75)
+        )
+
+        self.play(
+            Write(step_2_real_header, run_time=1),
+            FadeIn(step_2_real_commands, lag_ratio=0.4, run_time=3),
+        )
+        self.pause(3)
+
+
 class AllScenes(AdventureScene):
     ALL_SCENES = [
         Intro,
@@ -1795,6 +1880,7 @@ class AllScenes(AdventureScene):
         NineBlackboards,
         StepOne,
         StepTwo,
+        RepeatStepTwo,
     ]
 
     def draw_scene(self):
