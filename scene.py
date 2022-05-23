@@ -1896,7 +1896,9 @@ class RepeatStepTwo(AdventureScene):
 
         self.pause(1)
 
-        self.play(FadeOut(step_2_real_commands, g_blackboard, g_letter, blackboard_text, run_time=1))
+        self.play(
+            FadeOut(step_2_real_commands, g_blackboard, g_letter, blackboard_text, run_time=1)
+        )
         self.pause(1)
 
 
