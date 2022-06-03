@@ -28,6 +28,7 @@ from text_animations import animate_text_add_letters, animate_text_remove_letter
 
 STEP_1_TEXT = "awrwwnwpepseapnwwawwwpneppepseeeneneeapswwwwwaseepnwnwwwwpppppepseewwwwwwapseeaseepnwnwwwwwppeepseewapseeeaseepnwnwwwwwpppeepseewapseeeeaseepnwnwwwwwppppeepseeswapeeeeanwwwwppppeepseeeapeeeanwwwwpppeepseeeee"
 STEP_2_TEXT = "wwwwrnwwwwrnwwrnwwwwrnwwwwrseernwwwwrneeeeernwwwrneeeeerwwwrnwwwrwwwwrneeeeerseernwwwwrnwwwwrwwwwrnwwwwrnwwwwrnwwwwrneeeeerseernwwwrneeeeerneeeeernwwwrneeeeerwwwrnwwwrnwwwrnwwwrseernwwwrseernwwwrnwwwrwwwwrneeeeerwwwrnwwwwrnwwwwrnwwwwrnwwwwrnwwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeerneeeeerneeeeernwwwrneeeeerwwwrnwwwrnwwwrnwwwwrnwwwwrnwwwwrnwwwwrnwwwwrnwwwwrwwwwrneeeeerwwwrnwwwrnwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwwrwwwwrneeeeerwwwrnwwwrnwwwrnwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwwrwwwwrneeeeerwwwrnwwwrnwwwrnwwwrnwwwrwwwwrwwwrnwwwrnwwwrneeeeerseernwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrwwwrnwwwwrwwwwrneeeeernwwwrnwwwrnwwwrnwwwrwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwrwwwwrneeeeernwwwrnwwwrnwwwrwwwwrseernwwwwrnwwwwrnwwwwrnwwwwrneeeeerneeeeerneeeeernwwwrnwwwrneeeeerwwwrnwwwrnwwwrnwwwrnwwwrnwwwr"
+STEP_3_GAME_TEXT = STEP_2_TEXT.upper()
 G_BLACKBOARD_TEXT = "nw w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e nw w w w p p p p e e p se e w w w p ne p p e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w w p p p p e e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w p p p p p e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w p p p p p e p se e nw w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e se e p nw nw w w w w p p p e e p se e"
 
 
@@ -2045,7 +2046,270 @@ class StepThree(AdventureScene):
             line_spacing=0.1,
         ).move_to(g_blackboard_position)
 
-        self.play(*shift_animations, FadeIn(g_blackboard, g_letter, g_blackboard_text, run_time=2))
+        g_blackboard_arrow = draw_blackboard_arrow(UP * 1.75 + LEFT * 2.85 + g_blackboard_position)
+
+        step_3_game_header = (
+            Text(
+                "Letters Typed on Game\nKeyboard in Step 3:",
+                color=BLACK,
+                font_size=32,
+                font=MAIN_FONT,
+            )
+            .move_to(UP * 3)
+            .align_on_border(LEFT, buff=0.5)
+        )
+
+        self.play(
+            *shift_animations,
+            FadeIn(g_blackboard, g_letter, g_blackboard_text, run_time=2),
+            Write(step_3_game_header, run_time=2),
+        )
+        self.play(FadeIn(g_blackboard_arrow, run_time=1))
+
+        self.pause(1)
+
+        letters = ""
+        previous_game_text = None
+        time_per_letter_group = 0.4
+        arrow_moving_right = True
+
+        letter_groups = split_text(
+            "\n".join(split_text(STEP_3_GAME_TEXT, 40, False)),
+            116,
+            False,
+        )
+
+        for letter_group in letter_groups:
+            letters += letter_group
+
+            g_blackboard_arrow.generate_target()
+            if arrow_moving_right:
+                g_blackboard_arrow.target.shift(RIGHT * 5.7)
+                arrow_animation = MoveToTarget(
+                    g_blackboard_arrow,
+                    run_time=time_per_letter_group,
+                    rate_func=rate_functions.linear,
+                )
+            else:
+                g_blackboard_arrow.target.shift(DOWN * 0.644 + LEFT * 5.7)
+                arrow_animation = MoveToTarget(
+                    g_blackboard_arrow,
+                    run_time=time_per_letter_group,
+                    rate_func=rate_functions.ease_in_out_cubic,
+                )
+            arrow_moving_right = not arrow_moving_right
+
+            game_text = (
+                Text(
+                    letters + "\n" * 60 + "W" * 38,
+                    color=QWERTY_COLOR,
+                    width=6,
+                    font_size=24,
+                    font=MAIN_FONT,
+                    line_spacing=0.5,
+                )
+                .align_to(step_3_game_header, UP)
+                .shift(DOWN * 1.25)
+                .align_on_border(LEFT, buff=0.5)
+            )
+
+            self.play(
+                *animate_text_add_letters(
+                    game_text, previous_game_text, run_time=time_per_letter_group
+                ),
+                arrow_animation,
+            )
+
+            previous_game_text = game_text
+
+        self.play(FadeOut(g_blackboard_arrow, run_time=1))
+        self.pause(1)
+
+        shift_animations = []
+        for element in [
+            keyboard_status["blackboard"],
+            keyboard_status["blackboard_letter"],
+            keyboard_status["blackboard_text"],
+            keyboard_status["blackboard_arrow"],
+        ]:
+            element.generate_target()
+            element.target.shift(DOWN * 0.12)
+            shift_animations.append(MoveToTarget(element, run_time=1))
+
+        self.play(
+            *shift_animations,
+            FadeOut(
+                g_blackboard,
+                g_letter,
+                g_blackboard_text,
+                step_3_game_header,
+                previous_game_text,
+                run_time=1,
+            ),
+        )
+
+        previous_keyboard_status = keyboard_status
+        keyboard_status = init_keyboard_status(self)
+        keyboard_status["blackboard"] = previous_keyboard_status["blackboard"]
+        keyboard_status["blackboard_letter"] = previous_keyboard_status["blackboard_letter"]
+        keyboard_status["blackboard_text"] = previous_keyboard_status["blackboard_text"]
+        keyboard_status["blackboard_arrow"] = previous_keyboard_status["blackboard_arrow"]
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_keyboard",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_position_circle",
+                    "letter": "G",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_letters_typed_headers",
+                    "run_time": 2,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "a ... wwwwr ... er",
+                    "run_time": 2,
+                },
+                {
+                    "type": "game_text",
+                    "letters": "A ... WWWWR ... ",
+                    "run_time": 2,
+                },
+            ],
+        )
+        self.pause(7)
+
+        time_per_step = 0.8
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 0.87,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "F",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 0.37,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "D",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": RIGHT * 0.26,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "E",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": RIGHT * 0.89,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "button_press",
+                    "letter": "E",
+                    "run_time": time_per_step * 3,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": RIGHT * 1.39,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "R",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": RIGHT * 1.89,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "button_press",
+                    "letter": "R",
+                    "run_time": time_per_step * 3,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "fade_out_blackboard_arrow",
+                    "run_time": 1,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "fade_out_blackboard",
+                    "run_time": 1,
+                },
+                {
+                    "type": "fade_out_keyboard",
+                    "run_time": 1,
+                },
+                {
+                    "type": "fade_out_logs",
+                    "run_time": 1,
+                },
+            ],
+        )
 
         self.pause(1)
 
