@@ -1457,7 +1457,7 @@ class StepTwo(AdventureScene):
             keyboard_status["blackboard_arrow"],
         ]:
             element.generate_target()
-            element.target.shift(LEFT * 3.5 + UP * 0.12)
+            element.target.shift(LEFT * 3.5)
             shift_animations.append(MoveToTarget(element, run_time=1))
 
         g_blackboard_position = DOWN * 1.95
@@ -1491,7 +1491,7 @@ class StepTwo(AdventureScene):
             g_blackboard_text,
         ]:
             element.generate_target()
-            element.target.shift(RIGHT * 3.5 + UP * 3.78)
+            element.target.shift(RIGHT * 3.5 + UP * 3.9)
             shift_animations.append(MoveToTarget(element, run_time=1.5))
 
         self.play(
@@ -2024,17 +2024,6 @@ class StepThree(AdventureScene):
             ],
         )
 
-        shift_animations = []
-        for element in [
-            keyboard_status["blackboard"],
-            keyboard_status["blackboard_letter"],
-            keyboard_status["blackboard_text"],
-            keyboard_status["blackboard_arrow"],
-        ]:
-            element.generate_target()
-            element.target.shift(UP * 0.12)
-            shift_animations.append(MoveToTarget(element, run_time=1))
-
         g_blackboard_position = DOWN * 1.95 + RIGHT * 3.5
         g_blackboard, g_letter = draw_blackboard_with_letter(g_blackboard_position, "G")
 
@@ -2060,7 +2049,6 @@ class StepThree(AdventureScene):
         )
 
         self.play(
-            *shift_animations,
             FadeIn(g_blackboard, g_letter, g_blackboard_text, run_time=2),
             Write(step_3_game_header, run_time=2),
         )
@@ -2125,19 +2113,7 @@ class StepThree(AdventureScene):
         self.play(FadeOut(g_blackboard_arrow, run_time=1))
         self.pause(1)
 
-        shift_animations = []
-        for element in [
-            keyboard_status["blackboard"],
-            keyboard_status["blackboard_letter"],
-            keyboard_status["blackboard_text"],
-            keyboard_status["blackboard_arrow"],
-        ]:
-            element.generate_target()
-            element.target.shift(DOWN * 0.12)
-            shift_animations.append(MoveToTarget(element, run_time=1))
-
         self.play(
-            *shift_animations,
             FadeOut(
                 g_blackboard,
                 g_letter,

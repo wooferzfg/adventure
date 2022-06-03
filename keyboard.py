@@ -342,7 +342,7 @@ def process_events(keyboard_status, events):
 
     x_offset = 0
     y_offset = 2.25
-    blackboard_position = 3.5 * RIGHT + 1.83 * UP
+    blackboard_position = 3.5 * RIGHT + 1.95 * UP
     animation_layers = 3
 
     animations = {i: [] for i in range(animation_layers)}
