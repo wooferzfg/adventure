@@ -1902,6 +1902,154 @@ class RepeatStepTwo(AdventureScene):
         self.pause(1)
 
 
+class StepThree(AdventureScene):
+    def draw_scene(self):
+        step_3_text = Text("Step 3", font_size=72, color=BLACK, font=MAIN_FONT)
+        self.play(Write(step_3_text, run_time=1))
+        self.pause(1)
+        self.play(FadeOut(step_3_text, run_time=1))
+
+        keyboard_status = init_keyboard_status(self)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_keyboard",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_position_circle",
+                    "letter": "G",
+                    "run_time": 2,
+                },
+                {
+                    "type": "create_letters_typed_headers",
+                    "run_time": 2,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "a ... wwwwr ... ",
+                    "run_time": 2,
+                },
+                {
+                    "type": "game_text",
+                    "letters": "A ... ",
+                    "run_time": 2,
+                },
+            ],
+        )
+        self.pause(1)
+
+        time_per_step = 1
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "move",
+                    "letter": "H",
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "e",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "create_blackboard",
+                    "letter": "H",
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "real_text",
+                    "letters": "r",
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "blackboard_text",
+                    "text": "w r w w nw p e p",
+                    "transition": "fade",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+        self.pause(2)
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 1.86,
+                    "run_time": time_per_step,
+                },
+                {
+                    "type": "move",
+                    "letter": "G",
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "blackboard_arrow",
+                    "position": LEFT * 1.35,
+                    "run_time": time_per_step,
+                },
+            ],
+        )
+
+        keyboard_status = process_events(
+            keyboard_status,
+            [
+                {
+                    "type": "fade_out_keyboard",
+                    "run_time": 1,
+                },
+                {
+                    "type": "fade_out_logs",
+                    "run_time": 1,
+                },
+            ],
+        )
+
+        shift_animations = []
+        for element in [
+            keyboard_status["blackboard"],
+            keyboard_status["blackboard_letter"],
+            keyboard_status["blackboard_text"],
+            keyboard_status["blackboard_arrow"],
+        ]:
+            element.generate_target()
+            element.target.shift(UP * 0.12)
+            shift_animations.append(MoveToTarget(element, run_time=1))
+
+        g_blackboard_position = DOWN * 1.95 + RIGHT * 3.5
+        g_blackboard, g_letter = draw_blackboard_with_letter(g_blackboard_position, "G")
+
+        g_blackboard_text = Text(
+            "\n".join(split_text(G_BLACKBOARD_TEXT, 140)),
+            color=WHITE,
+            font=TERMINAL_FONT,
+            width=5.8,
+            line_spacing=0.1,
+        ).move_to(g_blackboard_position)
+
+        self.play(*shift_animations, FadeIn(g_blackboard, g_letter, g_blackboard_text, run_time=2))
+
+        self.pause(1)
+
+
 class AllScenes(AdventureScene):
     ALL_SCENES = [
         Intro,
@@ -1917,6 +2065,7 @@ class AllScenes(AdventureScene):
         StepOne,
         StepTwo,
         RepeatStepTwo,
+        StepThree,
     ]
 
     def draw_scene(self):
