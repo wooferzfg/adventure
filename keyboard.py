@@ -203,12 +203,8 @@ def draw_blackboard_text(position, text):
 def draw_command(command):
     updated_command = "\n  ".join(split_text(command, 26))
 
-    width = 6 if ("\n" in updated_command) else None
-    scale = 1 if ("\n" in updated_command) else 1.05
-
     return (
-        Text(f"> {updated_command}", font_size=28, font=TERMINAL_FONT, color=BLACK, width=width)
-        .scale(scale)
+        Text(f"> {updated_command}", font_size=28, font=TERMINAL_FONT, color=BLACK)
         .align_on_border(LEFT, buff=0.5)
         .shift(UP * 0.3)
     )
