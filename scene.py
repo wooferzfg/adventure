@@ -3321,7 +3321,7 @@ class AllCommands(AdventureScene):
                 chunk_text,
                 font=TERMINAL_FONT,
                 color=BLACK,
-                font_size=26,
+                font_size=18,
             )
 
             commands_text.generate_target()
@@ -3333,7 +3333,7 @@ class AllCommands(AdventureScene):
                 )
             else:
                 commands_text.align_on_border(UP, buff=8)
-                commands_text.target.align_on_border(DOWN, buff=344)
+                commands_text.target.align_on_border(DOWN, buff=242)
 
             commands_text.align_on_border(LEFT, buff=border_buffer)
 
