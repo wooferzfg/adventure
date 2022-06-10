@@ -2320,10 +2320,10 @@ class CommandsTable(AdventureScene):
             top_labels.append(text_element)
 
         left_labels = []
-        for ratio, text in [(0.25, "Step 1"), (0.55, "Step 2"), (0.85, "Step 3")]:
+        for ratio, text in [(0.255, "Step 1"), (0.555, "Step 2"), (0.855, "Step 3")]:
             text_y = table_top + DOWN * table_height * ratio
             text_element = Text(text, color=BLACK, font=MAIN_FONT, font_size=40).move_to(
-                table_left + RIGHT * table_width * 0.1 + text_y
+                table_left + RIGHT * table_width * 0.097 + text_y
             )
             left_labels.append(text_element)
 
@@ -2387,7 +2387,7 @@ class CommandsTable(AdventureScene):
             "1144 Letters",
             box_2_fill,
             box_2_outline,
-            table_top + DOWN * table_height * 0.775 + table_left + RIGHT * table_width * 0.8,
+            table_top + DOWN * table_height * 0.778 + table_left + RIGHT * table_width * 0.8,
         )
         self.play(*[Write(item, run_time=3) for item in box_2_game_text])
         self.pause(3)
@@ -2397,7 +2397,7 @@ class CommandsTable(AdventureScene):
             "2 Letters",
             box_3_fill,
             box_3_outline,
-            table_top + DOWN * table_height * 0.925 + table_left + RIGHT * table_width * 0.8,
+            table_top + DOWN * table_height * 0.922 + table_left + RIGHT * table_width * 0.8,
         )
         self.play(*[Write(item, run_time=3) for item in box_3_game_text])
         self.pause(7)
