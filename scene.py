@@ -2290,6 +2290,155 @@ class StepThree(AdventureScene):
         self.pause(1)
 
 
+class CommandsTable(AdventureScene):
+    def draw_scene(self):
+        table_height = 7
+        table_width = 13.2
+        table_top = UP * (table_height / 2)
+        table_bottom = DOWN * (table_height / 2)
+        table_left = LEFT * (table_width / 2)
+        table_right = RIGHT * (table_width / 2)
+
+        vertical_lines = []
+        for ratio in [0.2, 0.6]:
+            line_x = table_left + RIGHT * table_width * ratio
+            line = Line(table_top + line_x, table_bottom + line_x).set_color(BLACK)
+            vertical_lines.append(line)
+
+        horizontal_lines = []
+        for ratio in [0.1, 0.4, 0.7]:
+            line_y = table_top + DOWN * table_height * ratio
+            line = Line(table_left + line_y, table_right + line_y).set_color(BLACK)
+            horizontal_lines.append(line)
+
+        top_labels = []
+        for ratio, text in [(0.4, "Real Keyboard"), (0.8, "Game Keyboard")]:
+            text_x = table_left + RIGHT * table_width * ratio
+            text_element = Text(text, color=BLACK, font=MAIN_FONT, font_size=28).move_to(
+                table_top + DOWN * table_height * 0.05 + text_x
+            )
+            top_labels.append(text_element)
+
+        left_labels = []
+        for ratio, text in [(0.25, "Step 1"), (0.55, "Step 2"), (0.85, "Step 3")]:
+            text_y = table_top + DOWN * table_height * ratio
+            text_element = Text(text, color=BLACK, font=MAIN_FONT, font_size=40).move_to(
+                table_left + RIGHT * table_width * 0.1 + text_y
+            )
+            left_labels.append(text_element)
+
+        self.play(
+            *[
+                Write(item, run_time=3)
+                for item in vertical_lines + horizontal_lines + top_labels + left_labels
+            ]
+        )
+        self.pause(3)
+
+        box_1_outline = "#d98f8f"
+        box_1_fill = "#ffd9d9"
+        box_2_outline = "#d9d98f"
+        box_2_fill = "#ffffd9"
+        box_3_outline = "#8fc4d9"
+        box_3_fill = "#d9f4ff"
+
+        box_1_real_text = CommandsTable.draw_box(
+            "Set Up Blackboards",
+            "207 Letters",
+            box_1_fill,
+            box_1_outline,
+            table_top + DOWN * table_height * 0.25 + table_left + RIGHT * table_width * 0.4,
+        )
+        self.play(*[Write(item, run_time=3) for item in box_1_real_text])
+        self.pause(10)
+
+        box_1_game_text = CommandsTable.draw_box(
+            "Read Blackboard for Each Step 1 Letter",
+            "207 Letters",
+            box_1_fill,
+            box_1_outline,
+            table_top + DOWN * table_height * 0.55 + table_left + RIGHT * table_width * 0.8,
+        )
+        self.play(*[Write(item, run_time=3) for item in box_1_game_text])
+        self.pause(4)
+
+        box_2_real_text = CommandsTable.draw_box(
+            "Navigate to Blackboard for Each Step 1 Letter",
+            "1144 Letters",
+            box_2_fill,
+            box_2_outline,
+            table_top + DOWN * table_height * 0.55 + table_left + RIGHT * table_width * 0.4,
+        )
+        self.play(*[Write(item, run_time=3) for item in box_2_real_text])
+        self.pause(2)
+
+        box_3_real_text = CommandsTable.draw_box(
+            "Navigate to Final Blackboard",
+            "2 Letters",
+            box_3_fill,
+            box_3_outline,
+            table_top + DOWN * table_height * 0.85 + table_left + RIGHT * table_width * 0.4,
+        )
+        self.play(*[Write(item, run_time=3) for item in box_3_real_text])
+        self.pause(5)
+
+        box_2_game_text = CommandsTable.draw_box(
+            "Read Main Blackboard",
+            "1144 Letters",
+            box_2_fill,
+            box_2_outline,
+            table_top + DOWN * table_height * 0.775 + table_left + RIGHT * table_width * 0.8,
+        )
+        self.play(*[Write(item, run_time=3) for item in box_2_game_text])
+        self.pause(3)
+
+        box_3_game_text = CommandsTable.draw_box(
+            "Read Final Blackboard",
+            "2 Letters",
+            box_3_fill,
+            box_3_outline,
+            table_top + DOWN * table_height * 0.925 + table_left + RIGHT * table_width * 0.8,
+        )
+        self.play(*[Write(item, run_time=3) for item in box_3_game_text])
+        self.pause(7)
+
+        self.play(
+            FadeOut(
+                *horizontal_lines,
+                *vertical_lines,
+                *top_labels,
+                *left_labels,
+                *box_1_real_text,
+                *box_1_game_text,
+                *box_2_real_text,
+                *box_2_game_text,
+                *box_3_real_text,
+                *box_3_game_text,
+                run_time=1,
+            )
+        )
+        self.pause(1)
+
+    def draw_box(top_text, bottom_text, fill_color, outline_color, position):
+        rectangle = (
+            RoundedRectangle(
+                width=5.1,
+                height=0.9,
+                corner_radius=0.05,
+                color=outline_color,
+            )
+            .set_fill(fill_color, opacity=1)
+            .move_to(position)
+        )
+        top_text_element = Text(top_text, color=BLACK, font=MAIN_FONT, font_size=16).move_to(
+            position + UP * 0.18
+        )
+        bottom_text_element = Text(
+            bottom_text, color=BLACK, font=MAIN_FONT, weight=BOLD, font_size=20
+        ).move_to(position + DOWN * 0.18)
+        return [rectangle, top_text_element, bottom_text_element]
+
+
 class AllCommands(AdventureScene):
     def draw_scene(self):
         # 997 total commands
@@ -3375,6 +3524,7 @@ class AllScenes(AdventureScene):
         StepTwo,
         RepeatStepTwo,
         StepThree,
+        CommandsTable,
         AllCommands,
     ]
 
