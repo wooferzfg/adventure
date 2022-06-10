@@ -1174,7 +1174,7 @@ class StepOne(AdventureScene):
 class StepTwo(AdventureScene):
     def draw_scene(self):
         step_1_header = Text(
-            "Letters Typed on Real Keyboard in Step 1",
+            "Letters Typed on Real Keyboard in Step 1:",
             color=BLACK,
             font_size=40,
             font=MAIN_FONT,
