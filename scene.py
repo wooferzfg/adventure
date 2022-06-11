@@ -3498,7 +3498,7 @@ class AllCommands(AdventureScene):
 
         previous_text = None
         animations = []
-        border_buffer = 5.7
+        border_buffer = 6
 
         for commands_in_chunk in command_chunks:
             chunk_text = "\n".join(commands_in_chunk)
