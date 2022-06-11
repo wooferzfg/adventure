@@ -155,6 +155,9 @@ class DungeonRoom(AdventureScene):
 
 class TypeSameThing(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/TypeSameThing.wav")
+
+        self.pause(3)
         dungeon_outlines, dungeon_texts = draw_dungeon_keyboard(0, 0)
         self.play(*animate_keyboard_create(dungeon_outlines, dungeon_texts, run_time=4))
         self.pause(2)
@@ -168,7 +171,7 @@ class TypeSameThing(AdventureScene):
 
         qwerty_outlines, qwerty_texts = draw_qwerty_keyboard(0, 2.25)
         self.play(*animate_keyboard_create(qwerty_outlines, qwerty_texts, run_time=4))
-        self.pause(3)
+        self.pause(5)
 
         total_dungeon_letters = ""
         previous_top_text = None
@@ -227,6 +230,7 @@ class TypeSameThing(AdventureScene):
         both_keyboards_text.target.move_to(UP * 3.5)
         self.play(MoveToTarget(both_keyboards_text, run_time=2))
 
+        self.pause(1)
         real_keyboard_example = Text(
             "> ne w w e se sw nw p e ne nw sw", color=BLACK, font_size=36, font=TERMINAL_FONT
         ).move_to(UP * 1.25)
@@ -246,7 +250,7 @@ class TypeSameThing(AdventureScene):
         self.play(Write(game_keyboard_text, run_time=1))
 
         self.play(*animate_keyboard_texts(qwerty_texts, run_time=6))
-        self.pause(2)
+        self.pause(3)
 
         self.play(
             FadeOut(
@@ -263,7 +267,6 @@ class TypeSameThing(AdventureScene):
                 run_time=1,
             )
         )
-        self.pause(1)
 
 
 class GameKeyboardType(AdventureScene):
