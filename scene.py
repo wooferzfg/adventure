@@ -974,6 +974,9 @@ class BlackboardExample(AdventureScene):
 
 class NineBlackboards(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/NineBlackboards.wav")
+
+        self.pause(1)
         outlines, texts = draw_qwerty_keyboard(0, 0.6)
         self.play(*animate_keyboard_create(outlines, texts, run_time=2))
 
@@ -987,7 +990,7 @@ class NineBlackboards(AdventureScene):
             Write(blackboards_used_text, run_time=2),
             FadeIn(*blackboard_outlines, run_time=2),
         )
-        self.pause(1)
+        self.pause(1.5)
         self.play(FadeOut(blackboards_used_text, *blackboard_outlines, run_time=1))
 
         letters_text = Text(
@@ -998,7 +1001,7 @@ class NineBlackboards(AdventureScene):
             Write(letters_text, run_time=2),
             FadeIn(*blackboard_outlines, run_time=2),
         )
-        self.pause(5)
+        self.pause(7.5)
         self.play(FadeOut(letters_text, *blackboard_outlines, run_time=1))
 
         main_blackboard_text = Text(
@@ -1009,7 +1012,7 @@ class NineBlackboards(AdventureScene):
             Write(main_blackboard_text, run_time=2),
             FadeIn(*blackboard_outlines, run_time=2),
         )
-        self.pause(6)
+        self.pause(7)
         self.play(FadeOut(main_blackboard_text, *blackboard_outlines, run_time=1))
 
         final_blackboard_text = Text(
@@ -1020,11 +1023,10 @@ class NineBlackboards(AdventureScene):
             Write(final_blackboard_text, run_time=2),
             FadeIn(*blackboard_outlines, run_time=2),
         )
-        self.pause(5)
+        self.pause(5.5)
         self.play(FadeOut(final_blackboard_text, *blackboard_outlines, run_time=1))
 
         self.play(FadeOut(*outlines, *texts, run_time=1))
-        self.pause(1)
 
     def draw_outlines(letters):
         outlines = []
