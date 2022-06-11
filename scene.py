@@ -2475,6 +2475,9 @@ class CommandsTable(AdventureScene):
 
 class AllCommands(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/AllCommands.wav")
+
+        self.pause(1)
         # 997 total commands
         all_commands = [
             "a w r w w nw p e p",
@@ -3495,7 +3498,7 @@ class AllCommands(AdventureScene):
 
         previous_text = None
         animations = []
-        border_buffer = 5.1
+        border_buffer = 5.7
 
         for commands_in_chunk in command_chunks:
             chunk_text = "\n".join(commands_in_chunk)
@@ -3504,24 +3507,26 @@ class AllCommands(AdventureScene):
                 chunk_text,
                 font=TERMINAL_FONT,
                 color=BLACK,
-                font_size=18,
+                font_size=12,
             )
 
             commands_text.generate_target()
 
             if previous_text is not None:
-                commands_text.next_to(previous_text, DOWN)
-                commands_text.target.next_to(previous_text.target, DOWN).align_on_border(
+                commands_text.next_to(previous_text, DOWN, buff=0.07)
+                commands_text.target.next_to(previous_text.target, DOWN, buff=0.07).align_on_border(
                     LEFT, buff=border_buffer
                 )
             else:
                 commands_text.align_on_border(UP, buff=8)
-                commands_text.target.align_on_border(DOWN, buff=242)
+                commands_text.target.align_on_border(DOWN, buff=162.5).align_on_border(
+                    LEFT, buff=border_buffer
+                )
 
             commands_text.align_on_border(LEFT, buff=border_buffer)
 
             animations.append(
-                MoveToTarget(commands_text, run_time=15, rate_func=rate_functions.ease_in_out_sine)
+                MoveToTarget(commands_text, run_time=16, rate_func=rate_functions.ease_in_out_sine)
             )
             previous_text = commands_text
 
@@ -3536,7 +3541,7 @@ class AllCommands(AdventureScene):
             font=TERMINAL_FONT,
         )
         self.play(Write(final_game_text, run_time=2))
-        self.pause(1)
+        self.pause(2.5)
 
         self.play(FadeOut(final_game_text, run_time=1))
         self.pause(1)
