@@ -398,6 +398,7 @@ class GoalOfPuzzle(AdventureScene):
 
 class NavigatingPressingButtons(AdventureScene):
     def draw_scene(self):
+        self.pause(0.5)
         self.add_sound("sounds/NavigatingPressingButtons.wav")
 
         self.pause(0.5)
@@ -673,15 +674,18 @@ class NavigatingPressingButtons(AdventureScene):
 
 class Blackboards(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/Blackboards.wav")
+
+        self.pause(1)
         blackboard = ImageMobject("images/blackboard.png")
         self.play(FadeIn(blackboard, run_time=2))
-        self.pause(3)
+        self.pause(4.5)
 
         a_command = Text("> a w nw sw e p", color=BLACK, font_size=36, font=TERMINAL_FONT).move_to(
             UP * 2.5
         )
         self.play(FadeIn(a_command, run_time=1.5, lag_ratio=0.4))
-        self.pause(1)
+        self.pause(1.25)
 
         blackboard_text = Text("w nw sw e p", color=WHITE, font_size=36, font=TERMINAL_FONT)
         self.play(Write(blackboard_text, run_time=1.5))
@@ -689,7 +693,7 @@ class Blackboards(AdventureScene):
 
         r_command = Text("> r", color=BLACK, font_size=36, font=TERMINAL_FONT).move_to(UP * 2.5)
         self.play(FadeIn(r_command, run_time=0.5, lag_ratio=0.4))
-        self.pause(3)
+        self.pause(4)
 
         arrow = draw_blackboard_arrow(LEFT * 1.24)
         self.play(FadeIn(arrow, run_time=1.5))
@@ -701,7 +705,6 @@ class Blackboards(AdventureScene):
 
         self.play(FadeOut(r_command, arrow, run_time=1))
         self.play(FadeOut(blackboard, blackboard_text, run_time=1))
-        self.pause(1)
 
 
 class BlackboardExample(AdventureScene):
