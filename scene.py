@@ -1200,6 +1200,9 @@ class StepOne(AdventureScene):
 
 class StepTwo(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/StepTwo.wav")
+
+        self.pause(1)
         step_1_header = Text(
             "Letters Typed on Real Keyboard in Step 1:",
             color=BLACK,
@@ -1219,7 +1222,7 @@ class StepTwo(AdventureScene):
         self.play(
             Write(step_1_header, run_time=1), FadeIn(step_1_commands, lag_ratio=0.4, run_time=3)
         )
-        self.pause(3)
+        self.pause(6)
 
         a_text = (
             Text("a", color=BLACK, font_size=40, font=TERMINAL_FONT)
@@ -1264,7 +1267,7 @@ class StepTwo(AdventureScene):
                 },
             ],
         )
-        self.pause(1)
+        self.pause(2)
 
         time_per_step = 1
 
@@ -1332,7 +1335,7 @@ class StepTwo(AdventureScene):
             ],
         )
 
-        self.pause(2)
+        self.pause(3)
 
         keyboard_status = process_events(
             keyboard_status,
@@ -1356,7 +1359,7 @@ class StepTwo(AdventureScene):
             ],
         )
 
-        self.pause(6)
+        self.pause(10)
 
         keyboard_status = process_events(
             keyboard_status,
@@ -1374,7 +1377,7 @@ class StepTwo(AdventureScene):
             ],
         )
 
-        self.pause(7)
+        self.pause(9)
 
         time_per_step = 1
 
@@ -1442,15 +1445,15 @@ class StepTwo(AdventureScene):
             ],
         )
 
-        self.pause(7)
+        self.pause(8)
 
         wwwwr_highlight = Rectangle(color="#f2db05", width=1.8, height=0.6, stroke_width=6).move_to(
             UP * 2.81 + LEFT * 4.1
         )
         self.play(FadeIn(wwwwr_highlight, run_time=2))
-        self.pause(5)
+        self.pause(8)
         self.play(FadeOut(wwwwr_highlight, run_time=1))
-        self.pause(1)
+        self.pause(3.5)
 
         keyboard_status = process_events(
             keyboard_status,
@@ -1509,7 +1512,7 @@ class StepTwo(AdventureScene):
             g_blackboard_position, "nw w w w p p p p e e p se e"
         )
         self.play(Write(g_blackboard_text, run_time=1), FadeOut(arrow, run_time=1))
-        self.pause(1)
+        self.pause(4)
 
         shift_animations = []
         for element in [
@@ -1810,8 +1813,6 @@ class StepTwo(AdventureScene):
                 },
             ],
         )
-
-        self.pause(1)
 
 
 class RepeatStepTwo(AdventureScene):
