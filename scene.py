@@ -40,16 +40,20 @@ class AdventureScene(Scene):
 
 class Intro(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/Intro.wav")
+
+        self.pause(2)
         title_element = Text("Adventure", color=BLACK, font_size=160, font=MAIN_FONT).move_to(
             UP * 0.8
         )
-        self.play(Write(title_element, run_time=8))
+        self.play(Write(title_element, run_time=10))
         subtitle_element = Text(
             "Galactic Puzzle Hunt 2018", color=BLACK, font_size=60, font=MAIN_FONT
         ).move_to(DOWN * 1.2)
         self.play(FadeIn(subtitle_element, run_time=2))
-        self.pause(2)
+        self.pause(1)
         self.play(FadeOut(title_element, subtitle_element, run_time=1))
+        self.pause(1)
 
 
 class GameIntro(AdventureScene):
