@@ -1043,8 +1043,12 @@ class NineBlackboards(AdventureScene):
 
 class StepOne(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/StepOne.wav")
+
+        self.pause(1)
         step_1_text = Text("Step 1", font_size=72, color=BLACK, font=MAIN_FONT)
         self.play(Write(step_1_text, run_time=1))
+        self.pause(1)
         self.play(FadeOut(step_1_text, run_time=1))
 
         keyboard_status = init_keyboard_status(self)
@@ -1064,7 +1068,7 @@ class StepOne(AdventureScene):
             ],
         )
 
-        time_per_step = 0.45
+        time_per_step = 0.5
 
         StepOne.write_on_blackboard(keyboard_status, "H", "w r w w nw p e p", time_per_step)
         StepOne.move(keyboard_status, "N", "se", time_per_step)
@@ -1116,6 +1120,8 @@ class StepOne(AdventureScene):
         StepOne.move(keyboard_status, "F", "e", time_per_step)
         StepOne.move(keyboard_status, "G", "e", time_per_step)
 
+        self.pause(1)
+
         process_events(
             keyboard_status,
             [
@@ -1129,7 +1135,6 @@ class StepOne(AdventureScene):
                 },
             ],
         )
-        self.pause(1)
 
     def write_on_blackboard(keyboard_status, letter, commands, time_per_step):
         keyboard_status = process_events(
