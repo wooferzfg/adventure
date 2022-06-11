@@ -1817,6 +1817,9 @@ class StepTwo(AdventureScene):
 
 class RepeatStepTwo(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/RepeatStepTwo.wav")
+
+        self.pause(1)
         step_1_real_header = Text(
             "Letters Typed on Real Keyboard in Step 1:",
             color=BLACK,
@@ -1841,7 +1844,7 @@ class RepeatStepTwo(AdventureScene):
             Write(step_1_real_header, run_time=1),
             FadeIn(step_1_real_commands, lag_ratio=0.4, run_time=3),
         )
-        self.pause(5)
+        self.pause(7)
 
         step_2_game_header = Text(
             "Letters Typed on Game Keyboard in Step 2:",
@@ -1867,7 +1870,7 @@ class RepeatStepTwo(AdventureScene):
             Write(step_2_game_header, run_time=1),
             FadeIn(step_2_game_commands, lag_ratio=0.4, run_time=3),
         )
-        self.pause(3)
+        self.pause(3.5)
 
         step_2_real_header = Text(
             "Letters Typed on Real Keyboard in Step 2:",
@@ -1893,7 +1896,7 @@ class RepeatStepTwo(AdventureScene):
             Write(step_2_real_header, run_time=1),
             FadeIn(step_2_real_commands, lag_ratio=0.4, run_time=5),
         )
-        self.pause(1)
+        self.pause(2)
 
         self.play(
             FadeOut(
@@ -1923,12 +1926,11 @@ class RepeatStepTwo(AdventureScene):
         ).move_to(DOWN * 1.25)
         self.play(Write(blackboard_text, run_time=4))
 
-        self.pause(1)
+        self.pause(1.5)
 
         self.play(
             FadeOut(step_2_real_commands, g_blackboard, g_letter, blackboard_text, run_time=1)
         )
-        self.pause(1)
 
 
 class StepThree(AdventureScene):
