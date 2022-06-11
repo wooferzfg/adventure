@@ -2324,6 +2324,9 @@ class StepThree(AdventureScene):
 
 class CommandsTable(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/CommandsTable.wav")
+
+        self.pause(1)
         table_height = 7
         table_width = 13.2
         table_top = UP * (table_height / 2)
@@ -2365,7 +2368,7 @@ class CommandsTable(AdventureScene):
                 for item in vertical_lines + horizontal_lines + top_labels + left_labels
             ]
         )
-        self.pause(3)
+        self.pause(4)
 
         box_1_outline = "#d98f8f"
         box_1_fill = "#ffd9d9"
@@ -2382,7 +2385,7 @@ class CommandsTable(AdventureScene):
             table_top + DOWN * table_height * 0.25 + table_left + RIGHT * table_width * 0.4,
         )
         self.play(*[Write(item, run_time=3) for item in box_1_real_text])
-        self.pause(10)
+        self.pause(14)
 
         box_1_game_text = CommandsTable.draw_box(
             "Read Blackboard for Each Step 1 Letter",
@@ -2402,7 +2405,7 @@ class CommandsTable(AdventureScene):
             table_top + DOWN * table_height * 0.55 + table_left + RIGHT * table_width * 0.4,
         )
         self.play(*[Write(item, run_time=3) for item in box_2_real_text])
-        self.pause(2)
+        self.pause(2.5)
 
         box_3_real_text = CommandsTable.draw_box(
             "Navigate to Final Blackboard",
@@ -2412,7 +2415,7 @@ class CommandsTable(AdventureScene):
             table_top + DOWN * table_height * 0.85 + table_left + RIGHT * table_width * 0.4,
         )
         self.play(*[Write(item, run_time=3) for item in box_3_real_text])
-        self.pause(5)
+        self.pause(4.5)
 
         box_2_game_text = CommandsTable.draw_box(
             "Read Main Blackboard",
@@ -2422,7 +2425,7 @@ class CommandsTable(AdventureScene):
             table_top + DOWN * table_height * 0.778 + table_left + RIGHT * table_width * 0.8,
         )
         self.play(*[Write(item, run_time=3) for item in box_2_game_text])
-        self.pause(3)
+        self.pause(6.5)
 
         box_3_game_text = CommandsTable.draw_box(
             "Read Final Blackboard",
@@ -2432,7 +2435,7 @@ class CommandsTable(AdventureScene):
             table_top + DOWN * table_height * 0.922 + table_left + RIGHT * table_width * 0.8,
         )
         self.play(*[Write(item, run_time=3) for item in box_3_game_text])
-        self.pause(7)
+        self.pause(9.5)
 
         self.play(
             FadeOut(
@@ -2449,7 +2452,6 @@ class CommandsTable(AdventureScene):
                 run_time=1,
             )
         )
-        self.pause(1)
 
     def draw_box(top_text, bottom_text, fill_color, outline_color, position):
         rectangle = (
