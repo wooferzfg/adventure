@@ -709,6 +709,9 @@ class Blackboards(AdventureScene):
 
 class BlackboardExample(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/BlackboardExample.wav")
+
+        self.pause(1)
         keyboard_status = init_keyboard_status(self)
 
         keyboard_status = process_events(
@@ -729,7 +732,7 @@ class BlackboardExample(AdventureScene):
                 },
             ],
         )
-        self.pause(1)
+        self.pause(1.5)
 
         keyboard_status = process_events(
             keyboard_status,
@@ -798,7 +801,7 @@ class BlackboardExample(AdventureScene):
                 {
                     "type": "create_blackboard",
                     "letter": "H",
-                    "run_time": 2,
+                    "run_time": 1.5,
                 },
             ],
         )
@@ -810,7 +813,7 @@ class BlackboardExample(AdventureScene):
                     "type": "blackboard_text",
                     "text": "w p p p e",
                     "transition": "write",
-                    "run_time": 1,
+                    "run_time": 4,
                 },
             ],
         )
@@ -827,10 +830,10 @@ class BlackboardExample(AdventureScene):
                 },
             ],
         )
-        self.pause(3)
+        self.pause(4)
 
         keyboard_status = BlackboardExample.animate_blackboard_read(self, keyboard_status, 0.9)
-        self.pause(3)
+        self.pause(6)
 
         keyboard_status = process_events(
             keyboard_status,
@@ -842,7 +845,7 @@ class BlackboardExample(AdventureScene):
                 },
             ],
         )
-        keyboard_status = BlackboardExample.animate_blackboard_read(self, keyboard_status, 0.3)
+        keyboard_status = BlackboardExample.animate_blackboard_read(self, keyboard_status, 0.35)
 
         keyboard_status = process_events(
             keyboard_status,
@@ -854,7 +857,7 @@ class BlackboardExample(AdventureScene):
                 },
             ],
         )
-        keyboard_status = BlackboardExample.animate_blackboard_read(self, keyboard_status, 0.3)
+        keyboard_status = BlackboardExample.animate_blackboard_read(self, keyboard_status, 0.35)
         self.pause(1)
 
         keyboard_status = process_events(
@@ -874,8 +877,6 @@ class BlackboardExample(AdventureScene):
                 },
             ],
         )
-
-        self.pause(1)
 
     def animate_blackboard_read(self, keyboard_status, time_per_step):
         keyboard_status = process_events(
