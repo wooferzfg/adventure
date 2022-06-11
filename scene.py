@@ -1935,6 +1935,8 @@ class RepeatStepTwo(AdventureScene):
 
 class StepThree(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/StepThree.wav")
+
         step_3_text = Text("Step 3", font_size=72, color=BLACK, font=MAIN_FONT)
         self.play(Write(step_3_text, run_time=1))
         self.pause(1)
@@ -1970,7 +1972,6 @@ class StepThree(AdventureScene):
                 },
             ],
         )
-        self.pause(1)
 
         time_per_step = 1
 
@@ -1989,6 +1990,8 @@ class StepThree(AdventureScene):
                 },
             ],
         )
+
+        self.pause(2.5)
 
         keyboard_status = process_events(
             keyboard_status,
@@ -2011,7 +2014,7 @@ class StepThree(AdventureScene):
                 },
             ],
         )
-        self.pause(2)
+        self.pause(4)
 
         keyboard_status = process_events(
             keyboard_status,
@@ -2082,6 +2085,7 @@ class StepThree(AdventureScene):
             FadeIn(g_blackboard, g_letter, g_blackboard_text, run_time=2),
             Write(step_3_game_header, run_time=2),
         )
+        self.pause(1)
         self.play(FadeIn(g_blackboard_arrow, run_time=1))
 
         self.pause(1)
@@ -2189,7 +2193,7 @@ class StepThree(AdventureScene):
                 },
             ],
         )
-        self.pause(7)
+        self.pause(12)
 
         time_per_step = 0.8
 
@@ -2316,8 +2320,6 @@ class StepThree(AdventureScene):
                 },
             ],
         )
-
-        self.pause(1)
 
 
 class CommandsTable(AdventureScene):
