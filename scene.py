@@ -53,18 +53,20 @@ class Intro(AdventureScene):
         self.play(FadeIn(subtitle_element, run_time=2))
         self.pause(1)
         self.play(FadeOut(title_element, subtitle_element, run_time=1))
-        self.pause(1)
 
 
 class GameIntro(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/GameIntro.wav")
+
+        self.pause(1)
         game = AdventureGame()
         intro_text = game.get_current_output()
         intro_text_element = MarkupText(
             intro_text, color=BLACK, width=12, font_size=48, line_spacing=2, font=TERMINAL_FONT
         ).move_to(UP * 1)
         self.play(Write(intro_text_element, run_time=3))
-        self.pause(3)
+        self.pause(4)
 
         input_element = (
             Text("> ne", color=BLACK, font_size=36, font=TERMINAL_FONT)
@@ -76,7 +78,7 @@ class GameIntro(AdventureScene):
 
         input_element.generate_target()
         input_element.target.shift(UP * 4.5)
-        self.play(MoveToTarget(input_element, run_time=2), FadeOut(intro_text_element))
+        self.play(MoveToTarget(input_element, run_time=2), FadeOut(intro_text_element, run_time=1))
 
         second_room_text = game.get_current_output()
         second_room_text_element = MarkupText(
@@ -88,9 +90,8 @@ class GameIntro(AdventureScene):
             font=TERMINAL_FONT,
         ).move_to(DOWN * 0.5)
         self.play(Write(second_room_text_element, run_time=2))
-        self.pause(1)
+        self.pause(2)
         self.play(FadeOut(second_room_text_element, input_element, run_time=1))
-        self.pause(1)
 
 
 class DungeonRoom(AdventureScene):
