@@ -298,6 +298,9 @@ class GameKeyboardType(AdventureScene):
 
 class GoalOfPuzzle(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/GoalOfPuzzle.wav")
+
+        self.pause(1)
         real_keyboard_header = (
             Text("Letters Typed on Real Keyboard:", color=BLACK, font_size=32, font=MAIN_FONT)
             .move_to(UP * 2)
@@ -391,7 +394,6 @@ class GoalOfPuzzle(AdventureScene):
                 run_time=1,
             ),
         )
-        self.pause(1)
 
 
 class NavigatingPressingButtons(AdventureScene):
