@@ -96,6 +96,9 @@ class GameIntro(AdventureScene):
 
 class DungeonRoom(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/DungeonRoom.wav")
+
+        self.pause(1)
         letter_element = Text(
             "G", color=DUNGEON_COLOR, font_size=200, weight=BOLD, font=MAIN_FONT
         ).move_to(DOWN * 2.25)
@@ -104,7 +107,7 @@ class DungeonRoom(AdventureScene):
 
         button = ImageMobject("images/button_not_pressed.png").move_to(UP * 1.75 + RIGHT * 2.5)
         self.play(FadeIn(button, run_time=1))
-        self.pause(0.5)
+        self.pause(0.3)
 
         blackboard = ImageMobject("images/blackboard.png").move_to(UP * 1.75 + LEFT * 2.5)
         self.play(FadeIn(blackboard, run_time=1))
@@ -148,7 +151,6 @@ class DungeonRoom(AdventureScene):
         self.play(
             FadeOut(letter_element, button, blackboard, monkey, run_time=1),
         )
-        self.pause(1)
 
 
 class TypeSameThing(AdventureScene):
