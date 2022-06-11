@@ -271,6 +271,9 @@ class TypeSameThing(AdventureScene):
 
 class GameKeyboardType(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/GameKeyboardType.wav")
+
+        self.pause(1)
         letter_element = Text(
             "S", color=QWERTY_COLOR, font_size=200, weight=BOLD, font=MAIN_FONT
         ).move_to(DOWN * 1.75)
@@ -282,16 +285,15 @@ class GameKeyboardType(AdventureScene):
         button_pressed = ImageMobject("images/button_pressed.png").move_to(UP * 1)
         self.add(button_pressed)
 
-        self.pause(4)
+        self.pause(5)
         p_command = Text("> p", color=BLACK, font_size=36, font=TERMINAL_FONT).move_to(UP * 2.25)
         self.play(FadeIn(p_command, run_time=0.5, lag_ratio=0.4))
 
         self.play(FadeOut(button_not_pressed, run_time=1))
-        self.pause(0.5)
+        self.pause(1)
         self.play(
             FadeOut(p_command, button_pressed, letter_element, run_time=1),
         )
-        self.pause(1)
 
 
 class GoalOfPuzzle(AdventureScene):
