@@ -171,7 +171,7 @@ class TypeSameThing(AdventureScene):
 
         qwerty_outlines, qwerty_texts = draw_qwerty_keyboard(0, 2.25)
         self.play(*animate_keyboard_create(qwerty_outlines, qwerty_texts, run_time=4))
-        self.pause(5)
+        self.pause(5.6)
 
         total_dungeon_letters = ""
         previous_top_text = None
