@@ -398,19 +398,22 @@ class GoalOfPuzzle(AdventureScene):
 
 class NavigatingPressingButtons(AdventureScene):
     def draw_scene(self):
+        self.add_sound("sounds/NavigatingPressingButtons.wav")
+
+        self.pause(0.5)
         keyboard_status = init_keyboard_status(self)
-        time_per_letter = 0.7
+        time_per_letter = 0.8
 
         keyboard_status = process_events(
             keyboard_status,
             [
                 {
                     "type": "create_keyboard",
-                    "run_time": 2,
+                    "run_time": 1.5,
                 },
                 {
                     "type": "create_letters_typed_headers",
-                    "run_time": 2,
+                    "run_time": 1.5,
                 },
             ],
         )
@@ -425,6 +428,7 @@ class NavigatingPressingButtons(AdventureScene):
                 }
             ],
         )
+        self.pause(1)
 
         keyboard_status = process_events(
             keyboard_status,
@@ -665,8 +669,6 @@ class NavigatingPressingButtons(AdventureScene):
                 },
             ],
         )
-
-        self.pause(1)
 
 
 class Blackboards(AdventureScene):
